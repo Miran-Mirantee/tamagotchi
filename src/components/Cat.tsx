@@ -7,7 +7,6 @@ import { useRef, useEffect, useState } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { useControls } from "leva";
-import { INFINITY } from "three/tsl";
 
 interface GLTFAction extends THREE.AnimationClip {
   name: ActionName;
@@ -57,14 +56,13 @@ export function Cat(props: JSX.IntrinsicElements["group"]) {
 
   useEffect(() => {
     actions[currentAnimation]?.reset().fadeIn(0.5).play();
-    // .setLoop(THREE.LoopPingPong, Infinity);
 
     return () => {
       actions[currentAnimation]?.fadeOut(0.5);
     };
   }, [currentAnimation]);
 
-  const animationControls = useControls({
+  useControls({
     animations: {
       options: [
         "CharacterArmature|Idle",
@@ -106,30 +104,40 @@ export function Cat(props: JSX.IntrinsicElements["group"]) {
               geometry={nodes.Cat_Blob_1.geometry}
               material={customCatMain}
               skeleton={nodes.Cat_Blob_1.skeleton}
+              castShadow
+              receiveShadow
             />
             <skinnedMesh
               name="Cat_Blob_2"
               geometry={nodes.Cat_Blob_2.geometry}
               material={customCatSecondary}
               skeleton={nodes.Cat_Blob_2.skeleton}
+              castShadow
+              receiveShadow
             />
             <skinnedMesh
               name="Cat_Blob_3"
               geometry={nodes.Cat_Blob_3.geometry}
               material={materials.Ears}
               skeleton={nodes.Cat_Blob_3.skeleton}
+              castShadow
+              receiveShadow
             />
             <skinnedMesh
               name="Cat_Blob_4"
               geometry={nodes.Cat_Blob_4.geometry}
               material={materials.Eye_White}
               skeleton={nodes.Cat_Blob_4.skeleton}
+              castShadow
+              receiveShadow
             />
             <skinnedMesh
               name="Cat_Blob_5"
               geometry={nodes.Cat_Blob_5.geometry}
               material={materials.Eye_Black}
               skeleton={nodes.Cat_Blob_5.skeleton}
+              castShadow
+              receiveShadow
             />
           </group>
         </group>
