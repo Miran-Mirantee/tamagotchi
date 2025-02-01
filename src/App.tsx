@@ -1,4 +1,5 @@
 import { Canvas } from "@react-three/fiber";
+import { Perf } from "r3f-perf";
 // import {
 //   EffectComposer,
 //   Pixelation,
@@ -20,6 +21,7 @@ export default function App() {
         }}
         shadows
       >
+        <Perf position="top-left" />
         <Experience />
         {/* <EffectComposer>
           <Pixelation granularity={6} />

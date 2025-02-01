@@ -20,6 +20,7 @@ const Frame = forwardRef<THREE.Group, FrameProps>(
   ({ width = 2, height = 2, children, doubleClickFunc, ...props }, ref) => {
     const portal = useRef<PortalMaterialType | null>(null);
     const [hovered, hover] = useState(false);
+    const [isInside, setIsInside] = useState(false);
 
     useCursor(hovered);
 
@@ -39,15 +40,22 @@ const Frame = forwardRef<THREE.Group, FrameProps>(
       >
         <mesh
           onDoubleClick={(e) => {
+            console.log(e);
             e.stopPropagation();
             gsap.to(portal.current, {
               blend: 1,
-              duration: 0.2,
+              duration: 0.5,
             });
             if (doubleClickFunc) doubleClickFunc();
+            setIsInside(true);
+            hover(false);
           }}
-          onPointerOver={() => hover(true)}
-          onPointerOut={() => hover(false)}
+          onPointerOver={() => {
+            if (!isInside) hover(true);
+          }}
+          onPointerOut={() => {
+            if (!isInside) hover(false);
+          }}
         >
           <planeGeometry args={[width, height]} />
           <MeshPortalMaterial ref={portal} worldUnits>
