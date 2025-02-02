@@ -1,15 +1,18 @@
+import * as THREE from "three";
 import { useRef, useEffect } from "react";
-import { Backdrop, CameraControls, Environment } from "@react-three/drei";
+import { Backdrop, CameraControls, Environment, Html } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
 import Cat from "./components/Cat";
 import Frame from "./components/Frame";
-import * as THREE from "three";
+import useCameraStore from "./stores/useCameraStore";
 
 export default function Experience() {
   const frameRef = useRef<THREE.Group<THREE.Object3DEventMap> | null>(null);
-
   const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
     useThree();
+  const setZoomInTransition = useCameraStore(
+    (state) => state.setZoomInTransition
+  );
 
   useFrame((state) => {
     // console.log(state.camera.rotation);
@@ -26,12 +29,17 @@ export default function Experience() {
       frameRef.current.localToWorld(config.cameraFocus.set(0, -0.5, 0));
     }
 
+    const backBtn = document.querySelector(".back-btn") as HTMLElement;
+    backBtn.style.opacity = "1";
+    backBtn.style.pointerEvents = "all";
+
     controls?.setLookAt(
       ...config.cameraPos.toArray(),
       ...config.cameraFocus.toArray(),
       true
     );
   };
+  setZoomInTransition(zoomInTransition);
 
   return (
     <>
@@ -40,11 +48,7 @@ export default function Experience() {
         <boxGeometry args={[2.5, 2.5, 0.5]} />
         <meshStandardMaterial />
       </mesh>
-      <Frame
-        position={[0, 1, 1]}
-        ref={frameRef}
-        doubleClickFunc={zoomInTransition}
-      >
+      <Frame position={[0, 1, 1]} ref={frameRef}>
         <ambientLight />
         <directionalLight intensity={2.5} position={[3, 6, 3]} castShadow />
         <directionalLight intensity={1} position={[-3, 2, -6]} castShadow />

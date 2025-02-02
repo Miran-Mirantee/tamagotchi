@@ -7,20 +7,23 @@ import {
 } from "@react-three/drei";
 import { ThreeElements } from "@react-three/fiber";
 import gsap from "gsap";
+import useUIStore from "../stores/useUIStore";
+import useCameraStore from "../stores/useCameraStore";
 
 // Add your custom prop types for the component
 type FrameProps = {
   width?: number;
   height?: number;
   children: React.ReactNode;
-  doubleClickFunc?: () => void;
 } & ThreeElements["group"];
 
 const Frame = forwardRef<THREE.Group, FrameProps>(
-  ({ width = 2, height = 2, children, doubleClickFunc, ...props }, ref) => {
+  ({ width = 2, height = 2, children, ...props }, ref) => {
     const portal = useRef<PortalMaterialType | null>(null);
     const [hovered, hover] = useState(false);
     const [isInside, setIsInside] = useState(false);
+    const setBackFunction = useUIStore((state) => state.setBackFunction);
+    const zoomInTransition = useCameraStore((state) => state.zoomInTransition);
 
     useCursor(hovered);
 
@@ -30,23 +33,29 @@ const Frame = forwardRef<THREE.Group, FrameProps>(
       }
     }, []);
 
+    const back = () => {
+      const backBtn = document.querySelector(".back-btn") as HTMLElement;
+      backBtn.style.opacity = "0";
+      backBtn.style.pointerEvents = "none";
+      gsap.to(portal.current, {
+        blend: 0,
+        duration: 0.5,
+      });
+      setIsInside(false);
+    };
+
+    setBackFunction(back);
+
     return (
-      <group
-        {...props}
-        ref={ref}
-        onDoubleClick={() => {
-          console.log("TEST");
-        }}
-      >
+      <group {...props} ref={ref}>
         <mesh
           onDoubleClick={(e) => {
-            console.log(e);
             e.stopPropagation();
             gsap.to(portal.current, {
               blend: 1,
               duration: 0.5,
             });
-            if (doubleClickFunc) doubleClickFunc();
+            zoomInTransition();
             setIsInside(true);
             hover(false);
           }}

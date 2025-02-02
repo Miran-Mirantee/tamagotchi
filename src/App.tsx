@@ -8,6 +8,7 @@ import { Perf } from "r3f-perf";
 // import { ToneMappingMode } from "postprocessing";
 // import * as THREE from "three";
 import Experience from "./Experience";
+import UI from "./components/UI";
 
 export default function App() {
   return (
@@ -28,6 +29,8 @@ export default function App() {
           <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
         </EffectComposer> */}
       </Canvas>
+
+      <UI />
     </>
   );
 }
