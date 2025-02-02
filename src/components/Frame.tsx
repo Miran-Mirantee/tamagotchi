@@ -24,6 +24,9 @@ const Frame = forwardRef<THREE.Group, FrameProps>(
     const [isInside, setIsInside] = useState(false);
     const setBackFunction = useUIStore((state) => state.setBackFunction);
     const zoomInTransition = useCameraStore((state) => state.zoomInTransition);
+    const zoomOutTransition = useCameraStore(
+      (state) => state.zoomOutTransition
+    );
 
     useCursor(hovered);
 
@@ -41,23 +44,30 @@ const Frame = forwardRef<THREE.Group, FrameProps>(
         blend: 0,
         duration: 0.5,
       });
+      zoomOutTransition();
       setIsInside(false);
     };
-
     setBackFunction(back);
+
+    const enter = () => {
+      const backBtn = document.querySelector(".back-btn") as HTMLElement;
+      backBtn.style.opacity = "1";
+      backBtn.style.pointerEvents = "all";
+      gsap.to(portal.current, {
+        blend: 1,
+        duration: 0.5,
+      });
+      zoomInTransition();
+      setIsInside(true);
+      hover(false);
+    };
 
     return (
       <group {...props} ref={ref}>
         <mesh
           onDoubleClick={(e) => {
             e.stopPropagation();
-            gsap.to(portal.current, {
-              blend: 1,
-              duration: 0.5,
-            });
-            zoomInTransition();
-            setIsInside(true);
-            hover(false);
+            enter();
           }}
           onPointerOver={() => {
             if (!isInside) hover(true);

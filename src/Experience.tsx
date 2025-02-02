@@ -13,6 +13,9 @@ export default function Experience() {
   const setZoomInTransition = useCameraStore(
     (state) => state.setZoomInTransition
   );
+  const setZoomOutTransition = useCameraStore(
+    (state) => state.setZoomOutTransition
+  );
 
   useFrame((state) => {
     // console.log(state.camera.rotation);
@@ -29,10 +32,6 @@ export default function Experience() {
       frameRef.current.localToWorld(config.cameraFocus.set(0, -0.5, 0));
     }
 
-    const backBtn = document.querySelector(".back-btn") as HTMLElement;
-    backBtn.style.opacity = "1";
-    backBtn.style.pointerEvents = "all";
-
     controls?.setLookAt(
       ...config.cameraPos.toArray(),
       ...config.cameraFocus.toArray(),
@@ -40,6 +39,20 @@ export default function Experience() {
     );
   };
   setZoomInTransition(zoomInTransition);
+
+  const zoomOutTransition = () => {
+    if (frameRef.current) {
+      frameRef.current.localToWorld(config.cameraPos.set(0, 3, 4));
+      frameRef.current.localToWorld(config.cameraFocus.set(0, 0, 0));
+    }
+
+    controls?.setLookAt(
+      ...config.cameraPos.toArray(),
+      ...config.cameraFocus.toArray(),
+      true
+    );
+  };
+  setZoomOutTransition(zoomOutTransition);
 
   return (
     <>
