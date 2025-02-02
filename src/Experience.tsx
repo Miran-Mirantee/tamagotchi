@@ -1,13 +1,13 @@
 import * as THREE from "three";
 import { useRef, useEffect } from "react";
-import { Backdrop, CameraControls, Environment, Html } from "@react-three/drei";
+import { Backdrop, CameraControls, Environment } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
 import Cat from "./components/Cat";
 import Frame from "./components/Frame";
 import useCameraStore from "./stores/useCameraStore";
+import { Cheeseburger } from "./components/Cheeseburger";
 
 export default function Experience() {
-  const frameRef = useRef<THREE.Group<THREE.Object3DEventMap> | null>(null);
   const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
     useThree();
   const setZoomInTransition = useCameraStore(
@@ -21,38 +21,36 @@ export default function Experience() {
     // console.log(state.camera.rotation);
   });
 
-  const config = {
-    cameraPos: new THREE.Vector3(0, 0, 0),
-    cameraFocus: new THREE.Vector3(0, 0, 0),
-  };
+  useEffect(() => {
+    const config = {
+      cameraPos: new THREE.Vector3(0, 0, 0),
+      cameraFocus: new THREE.Vector3(0, 0, 0),
+    };
 
-  const zoomInTransition = () => {
-    if (frameRef.current) {
-      frameRef.current.localToWorld(config.cameraPos.set(0, 0.45, 2.735));
-      frameRef.current.localToWorld(config.cameraFocus.set(0, -0.5, 0));
-    }
+    const zoomInTransition = (frame: THREE.Group) => {
+      frame.localToWorld(config.cameraPos.set(0, 0.45, 2.735));
+      frame.localToWorld(config.cameraFocus.set(0, -0.5, 0));
 
-    controls?.setLookAt(
-      ...config.cameraPos.toArray(),
-      ...config.cameraFocus.toArray(),
-      true
-    );
-  };
-  setZoomInTransition(zoomInTransition);
+      controls.setLookAt(
+        ...config.cameraPos.toArray(),
+        ...config.cameraFocus.toArray(),
+        true
+      );
+    };
 
-  const zoomOutTransition = () => {
-    if (frameRef.current) {
-      frameRef.current.localToWorld(config.cameraPos.set(0, 3, 4));
-      frameRef.current.localToWorld(config.cameraFocus.set(0, 0, 0));
-    }
+    const zoomOutTransition = (frame: THREE.Group) => {
+      frame.localToWorld(config.cameraPos.set(0, 2, 3));
+      frame.localToWorld(config.cameraFocus.set(0, 0, 0));
 
-    controls?.setLookAt(
-      ...config.cameraPos.toArray(),
-      ...config.cameraFocus.toArray(),
-      true
-    );
-  };
-  setZoomOutTransition(zoomOutTransition);
+      controls.setLookAt(
+        ...config.cameraPos.toArray(),
+        ...config.cameraFocus.toArray(),
+        true
+      );
+    };
+    setZoomInTransition(zoomInTransition);
+    setZoomOutTransition(zoomOutTransition);
+  }, [setZoomInTransition, setZoomOutTransition, controls]);
 
   return (
     <>
@@ -61,12 +59,13 @@ export default function Experience() {
         <boxGeometry args={[2.5, 2.5, 0.5]} />
         <meshStandardMaterial />
       </mesh>
-      <Frame position={[0, 1, 1]} ref={frameRef}>
+      <Frame position={[0, 1, 1]}>
         <ambientLight />
         <directionalLight intensity={2.5} position={[3, 6, 3]} castShadow />
         <directionalLight intensity={1} position={[-3, 2, -6]} castShadow />
         <color args={["black"]} attach={"background"} />
         <Cat scale={0.5} position={[0, 0, 0]} />
+        <Cheeseburger scale={0.25} position={[0, 0.25, 1]} />
         <Backdrop
           receiveShadow
           position={[0, 0, -1]}
