@@ -31,3 +31,15 @@ body,
   left: 0;
   pointer-events: none;
 }
+
+.status {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  pointer-events: all;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  background-color: white;
+  padding: 4px 8px;
+}

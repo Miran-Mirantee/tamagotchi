@@ -5,7 +5,7 @@ import { useThree, useFrame } from "@react-three/fiber";
 import Cat from "./components/Cat";
 import Frame from "./components/Frame";
 import useCameraStore from "./stores/useCameraStore";
-import { Cheeseburger } from "./components/Cheeseburger";
+import FoodTray from "./components/FoodTray";
 
 export default function Experience() {
   const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
@@ -65,7 +65,7 @@ export default function Experience() {
         <directionalLight intensity={1} position={[-3, 2, -6]} castShadow />
         <color args={["black"]} attach={"background"} />
         <Cat scale={0.5} position={[0, 0, 0]} />
-        <Cheeseburger scale={0.25} position={[0, 0.25, 1]} />
+        <FoodTray position={[0, 0.05, 1]} />
         <Backdrop
           receiveShadow
           position={[0, 0, -1]}

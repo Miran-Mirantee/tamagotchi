@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { forwardRef, useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   MeshPortalMaterial,
   PortalMaterialType,
@@ -86,86 +86,5 @@ const Frame = ({ width = 2, height = 2, children, ...props }: FrameProps) => {
     </group>
   );
 };
-
-// const Frame = forwardRef<THREE.Group, FrameProps>(
-//   ({ width = 2, height = 2, children, ...props }) => {
-//     const portal = useRef<PortalMaterialType | null>(null);
-//     const frame = useRef<THREE.Group | null>(null);
-//     const [hovered, hover] = useState(false);
-//     const [isInside, setIsInside] = useState(false);
-//     const setBackFunction = useUIStore((state) => state.setBackFunction);
-//     const zoomInTransition = useCameraStore((state) => state.zoomInTransition);
-//     const zoomOutTransition = useCameraStore(
-//       (state) => state.zoomOutTransition
-//     );
-
-//     useCursor(hovered);
-
-//     // useEffect(() => {
-//     //   if (portal.current) {
-//     //     console.log("Portal material is ready", portal.current);
-//     //   }
-//     // }, []);
-//     useEffect(() => {
-//       setBackFunction(back);
-//     }, [setBackFunction]);
-
-//     const back = () => {
-//       const backBtn = document.querySelector(".back-btn") as HTMLElement;
-//       backBtn.style.opacity = "0";
-//       backBtn.style.pointerEvents = "none";
-//       gsap.to(portal.current, {
-//         blend: 0,
-//         duration: 0.5,
-//       });
-//       if (frame.current) {
-//         console.log("out");
-//         // zoomInTransition(frame.current);
-//       }
-//       zoomOutTransition(frame.current!);
-//       setIsInside(false);
-//     };
-
-//     const enter = () => {
-//       const backBtn = document.querySelector(".back-btn") as HTMLElement;
-//       backBtn.style.opacity = "1";
-//       backBtn.style.pointerEvents = "all";
-//       gsap.to(portal.current, {
-//         blend: 1,
-//         duration: 0.5,
-//       });
-//       if (frame.current) {
-//         console.log("in");
-//       }
-//       zoomInTransition(frame.current!);
-//       setIsInside(true);
-//       hover(false);
-//     };
-
-//     return (
-//       <group {...props} ref={frame}>
-//         <mesh
-//           onDoubleClick={(e) => {
-//             if (!isInside) {
-//               enter();
-//               e.stopPropagation();
-//             }
-//           }}
-//           onPointerOver={() => {
-//             if (!isInside) hover(true);
-//           }}
-//           onPointerOut={() => {
-//             if (!isInside) hover(false);
-//           }}
-//         >
-//           <planeGeometry args={[width, height]} />
-//           <MeshPortalMaterial ref={portal} worldUnits>
-//             {children}
-//           </MeshPortalMaterial>
-//         </mesh>
-//       </group>
-//     );
-//   }
-// );
 
 export default Frame;
