@@ -21,8 +21,9 @@ const Frame = ({ width = 2, height = 2, children, ...props }: FrameProps) => {
   const portal = useRef<PortalMaterialType | null>(null);
   const frame = useRef<THREE.Group | null>(null);
   const [hovered, hover] = useState(false);
-  const [isInside, setIsInside] = useState(false);
   const setBackFunction = useUIStore((state) => state.setBackFunction);
+  const setIsInside = useUIStore((state) => state.setIsInside);
+  const isInside = useUIStore((state) => state.isInside);
   const zoomInTransition = useCameraStore((state) => state.zoomInTransition);
   const zoomOutTransition = useCameraStore((state) => state.zoomOutTransition);
 
@@ -38,9 +39,6 @@ const Frame = ({ width = 2, height = 2, children, ...props }: FrameProps) => {
   }, [setBackFunction, zoomOutTransition]);
 
   const back = () => {
-    const backBtn = document.querySelector(".back-btn") as HTMLElement;
-    backBtn.style.opacity = "0";
-    backBtn.style.pointerEvents = "none";
     gsap.to(portal.current, {
       blend: 0,
       duration: 0.5,
@@ -50,9 +48,6 @@ const Frame = ({ width = 2, height = 2, children, ...props }: FrameProps) => {
   };
 
   const enter = () => {
-    const backBtn = document.querySelector(".back-btn") as HTMLElement;
-    backBtn.style.opacity = "1";
-    backBtn.style.pointerEvents = "all";
     gsap.to(portal.current, {
       blend: 1,
       duration: 0.5,

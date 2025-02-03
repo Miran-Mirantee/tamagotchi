@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import useUIStore from "../stores/useUIStore";
 import useTamagotchiStore, { Food } from "../stores/useTamagotchiStore";
 import Cheeseburger from "./Cheeseburger";
@@ -5,12 +6,16 @@ import Donut from "./Donut";
 
 const UI = () => {
   const back = useUIStore((state) => state.back);
+  const isInside = useUIStore((state) => state.isInside);
   const hunger = useTamagotchiStore((state) => state.hunger);
   const energy = useTamagotchiStore((state) => state.energy);
   const happiness = useTamagotchiStore((state) => state.happiness);
   const feed = useTamagotchiStore((state) => state.feed);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
   const isEating = useTamagotchiStore((state) => state.isEating);
+  const uiContainerRef = useRef<HTMLDivElement>(null);
+  const backBtnRef = useRef<HTMLButtonElement>(null);
+  const statusRef = useRef<HTMLDivElement>(null);
 
   const burger: Food = {
     name: "burger",
@@ -28,12 +33,24 @@ const UI = () => {
     happiness: 50,
   };
 
+  useEffect(() => {
+    if (isInside) {
+      uiContainerRef.current!.style.opacity = "1";
+      backBtnRef.current!.style.pointerEvents = "all";
+      statusRef.current!.style.pointerEvents = "all";
+    } else {
+      uiContainerRef.current!.style.opacity = "0";
+      backBtnRef.current!.style.pointerEvents = "none";
+      statusRef.current!.style.pointerEvents = "none";
+    }
+  }, [isInside]);
+
   return (
-    <div className="ui-container">
-      <button className="back-btn" onClick={back}>
+    <div className="ui-container" ref={uiContainerRef}>
+      <button className="back-btn" ref={backBtnRef} onClick={back}>
         Go back
       </button>
-      <div className="status">
+      <div className="status" ref={statusRef}>
         <div>Hunger: {hunger}</div>
         <div>Energy: {energy}</div>
         <div>Happiness: {happiness}</div>

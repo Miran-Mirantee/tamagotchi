@@ -15,8 +15,6 @@ body,
   left: 16px;
   font-size: 18px;
   user-select: none;
-  opacity: 0;
-  transition: opacity 1s ease-out;
 }
 
 .back-btn:hover {
@@ -30,13 +28,15 @@ body,
   top: 0;
   left: 0;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease-out;
 }
 
 .status {
   position: absolute;
   bottom: 16px;
   right: 16px;
-  pointer-events: all;
+  /* pointer-events: all; */
   display: flex;
   gap: 8px;
   flex-direction: column;
