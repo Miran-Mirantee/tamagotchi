@@ -43,3 +43,9 @@ body,
   background-color: white;
   padding: 4px 8px;
 }
+
+.need {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

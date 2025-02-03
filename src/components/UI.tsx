@@ -10,6 +10,9 @@ const UI = () => {
   const hunger = useTamagotchiStore((state) => state.hunger);
   const energy = useTamagotchiStore((state) => state.energy);
   const happiness = useTamagotchiStore((state) => state.happiness);
+  const maxHunger = useTamagotchiStore((state) => state.maxHunger);
+  const maxEnergy = useTamagotchiStore((state) => state.maxEnergy);
+  const maxHappiness = useTamagotchiStore((state) => state.maxHappiness);
   const feed = useTamagotchiStore((state) => state.feed);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
   const isEating = useTamagotchiStore((state) => state.isEating);
@@ -51,9 +54,28 @@ const UI = () => {
         Go back
       </button>
       <div className="status" ref={statusRef}>
-        <div>Hunger: {hunger}</div>
-        <div>Energy: {energy}</div>
-        <div>Happiness: {happiness}</div>
+        <div className="need">
+          <span>Hunger: </span>
+          <progress value={hunger} max={maxHunger} />
+          <span>
+            {hunger} / {maxHunger}
+          </span>
+        </div>
+        <div className="need">
+          <span>Energy: </span>
+          <progress value={energy} max={maxEnergy} />
+          <span>
+            {energy} / {maxEnergy}
+          </span>
+        </div>
+        <div className="need">
+          <span>Happiness: </span>
+          <progress value={happiness} max={maxHappiness} />
+          <span>
+            {happiness} / {maxHappiness}
+          </span>
+        </div>
+
         <button
           onClick={() => {
             if (!isEating) {
