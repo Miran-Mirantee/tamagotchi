@@ -9,6 +9,7 @@ export type Food = {
 };
 
 type TamagotchiState = {
+  baseModelPath: string;
   hunger: number;
   energy: number;
   happiness: number;
@@ -17,12 +18,14 @@ type TamagotchiState = {
   maxHappiness: number;
   isEating: boolean;
   currentFood: Food | null;
+  setBaseModelPath: (baseModelPath: string) => void;
   setIsEating: (isEating: boolean) => void;
   setCurrentFood: (food: Food | null) => void;
   feed: () => void;
 };
 
 const useTamagotchiStore = create<TamagotchiState>((set) => ({
+  baseModelPath: "",
   hunger: 0,
   energy: 0,
   happiness: 0,
@@ -31,6 +34,7 @@ const useTamagotchiStore = create<TamagotchiState>((set) => ({
   maxHappiness: 100,
   isEating: false,
   currentFood: null,
+  setBaseModelPath: (baseModelPath: string) => set(() => ({ baseModelPath })),
   setIsEating: (isEating) => set(() => ({ isEating })),
   feed: () =>
     set((state) => {

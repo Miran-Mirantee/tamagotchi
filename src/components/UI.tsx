@@ -16,6 +16,9 @@ const UI = () => {
   const feed = useTamagotchiStore((state) => state.feed);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
   const isEating = useTamagotchiStore((state) => state.isEating);
+  const setBaseModelPath = useTamagotchiStore(
+    (state) => state.setBaseModelPath
+  );
   const uiContainerRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -95,6 +98,69 @@ const UI = () => {
           }}
         >
           feed donut
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Cat.glb");
+          }}
+        >
+          Cat
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Pigeon.glb");
+          }}
+        >
+          Pigeon
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Slime.glb");
+          }}
+        >
+          Slime
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Chicken.glb");
+          }}
+        >
+          Chicken
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Orc.glb");
+          }}
+        >
+          Orc
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Alien.glb");
+          }}
+        >
+          Alien
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Fish.glb");
+          }}
+        >
+          Fish
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Birb.glb");
+          }}
+        >
+          Birb
+        </button>
+        <button
+          onClick={() => {
+            setBaseModelPath("./models/Mushnub.glb");
+          }}
+        >
+          Mushnub
         </button>
       </div>
     </div>

@@ -25,6 +25,7 @@ import UI from "./components/UI";
  * 11. add tamagotchi customization feature
  * 12. improve inside of tamagotchi scene
  * 13. (optional) add house customization feature
+ * 14. add pet interactions to the world (walking around, sleeping, etc.)
  */
 
 export default function App() {

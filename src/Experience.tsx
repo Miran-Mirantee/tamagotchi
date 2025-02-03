@@ -2,10 +2,10 @@ import * as THREE from "three";
 import { useRef, useEffect } from "react";
 import { Backdrop, CameraControls, Environment } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
-import Cat from "./components/Cat";
 import Frame from "./components/Frame";
 import useCameraStore from "./stores/useCameraStore";
 import FoodTray from "./components/FoodTray";
+import PetInteractions from "./components/PetInteractions";
 
 export default function Experience() {
   const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
@@ -64,7 +64,7 @@ export default function Experience() {
         <directionalLight intensity={2.5} position={[3, 6, 3]} castShadow />
         <directionalLight intensity={1} position={[-3, 2, -6]} castShadow />
         <color args={["black"]} attach={"background"} />
-        <Cat scale={0.5} position={[0, 0, 0]} />
+        <PetInteractions />
         <FoodTray position={[0, 0.05, 1]} />
         <Backdrop
           receiveShadow
