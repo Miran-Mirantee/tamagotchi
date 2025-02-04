@@ -6,8 +6,10 @@ import Frame from "./components/Frame";
 import useCameraStore from "./stores/useCameraStore";
 import FoodTray from "./components/FoodTray";
 import PetInteractions from "./components/PetInteractions";
+import useTamagotchiStore from "./stores/useTamagotchiStore";
 
 export default function Experience() {
+  const setDestination = useTamagotchiStore((state) => state.setDestination);
   const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
     useThree();
   const setZoomInTransition = useCameraStore(
@@ -66,7 +68,7 @@ export default function Experience() {
         <color args={["black"]} attach={"background"} />
         <PetInteractions />
         <FoodTray position={[0, 0.05, 1]} />
-        <Backdrop
+        {/* <Backdrop
           receiveShadow
           position={[0, 0, -1]}
           scale={[10, 3, 2]}
@@ -74,7 +76,21 @@ export default function Experience() {
           segments={20} // Mesh-resolution, 20 by default
         >
           <meshStandardMaterial color="rgba(44,37,67,1)" />
-        </Backdrop>
+        </Backdrop> */}
+        <mesh
+          rotation={[Math.PI * -0.5, 0, 0]}
+          onPointerDown={(e) => {
+            if (e.uv) {
+              const coordinate = new THREE.Vector3();
+              coordinate.setX(e.uv.x * 10 - 5);
+              coordinate.setZ((e.uv.y * 10 - 5) * -1);
+              setDestination(coordinate);
+            }
+          }}
+        >
+          <planeGeometry args={[10, 10]} />
+          <meshStandardMaterial color="rgba(44,37,67,1)" />
+        </mesh>
       </Frame>
 
       <CameraControls
