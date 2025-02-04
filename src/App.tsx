@@ -13,7 +13,6 @@ import UI from "./components/UI";
 /**
  * TODO:
  * 1. add more types of food
- * 2. add more pet models to choose
  * 3. add model customization feature
  * 4. save data in localStorage
  * 5. improve eat system
@@ -26,6 +25,7 @@ import UI from "./components/UI";
  * 12. improve inside of tamagotchi scene
  * 13. (optional) add house customization feature
  * 14. add pet interactions to the world (walking around, sleeping, etc.)
+ * 15. (optional) add cooking feature
  */
 
 export default function App() {

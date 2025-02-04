@@ -78,7 +78,6 @@ export default function Pet({
                   skeleton={item.skeleton}
                   castShadow
                   receiveShadow
-                  scale={0.1}
                 />
               );
             })}

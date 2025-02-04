@@ -46,7 +46,12 @@ export default function PetInteractions() {
     <>
       {baseModelPath && (
         <Suspense>
-          <Pet url={baseModelPath} scale={0.25} animation={currentAnimation} />
+          <Pet
+            key={baseModelPath}
+            url={baseModelPath}
+            scale={0.5}
+            animation={currentAnimation}
+          />
         </Suspense>
       )}
     </>
