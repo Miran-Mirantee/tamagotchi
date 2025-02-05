@@ -10,6 +10,9 @@ import useTamagotchiStore from "./stores/useTamagotchiStore";
 
 export default function Experience() {
   const setDestination = useTamagotchiStore((state) => state.setDestination);
+  const setOrigin = useTamagotchiStore((state) => state.setOrigin);
+  const toPoint = useTamagotchiStore((state) => state.toPoint);
+
   const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
     useThree();
   const setZoomInTransition = useCameraStore(
@@ -80,12 +83,13 @@ export default function Experience() {
         <mesh
           rotation={[Math.PI * -0.5, 0, 0]}
           onPointerDown={(e) => {
-            if (e.uv) {
-              const coordinate = new THREE.Vector3();
-              coordinate.setX(e.uv.x * 10 - 5);
-              coordinate.setZ((e.uv.y * 10 - 5) * -1);
-              setDestination(coordinate);
-            }
+            // if (e.uv) {
+            //   const coordinate = new THREE.Vector3();
+            //   coordinate.setX(e.uv.x * 10 - 5);
+            //   coordinate.setZ((e.uv.y * 10 - 5) * -1);
+            //   setOrigin(toPoint);
+            //   setDestination(coordinate);
+            // }
           }}
         >
           <planeGeometry args={[10, 10]} />
