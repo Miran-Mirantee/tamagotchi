@@ -4,15 +4,39 @@ import useTamagotchiStore, { Food } from "../stores/useTamagotchiStore";
 import Cheeseburger from "./Cheeseburger";
 import Donut from "./Donut";
 
+const Need = ({
+  label,
+  value,
+  maxValue,
+}: {
+  label: string;
+  value: number;
+  maxValue: number;
+}) => {
+  return (
+    <div className="need">
+      <span>{label} </span>
+      <progress value={value} max={maxValue} />
+      <span>
+        {value} / {maxValue}
+      </span>
+    </div>
+  );
+};
+
 const UI = () => {
   const back = useUIStore((state) => state.back);
   const isInside = useUIStore((state) => state.isInside);
   const hunger = useTamagotchiStore((state) => state.hunger);
   const energy = useTamagotchiStore((state) => state.energy);
   const happiness = useTamagotchiStore((state) => state.happiness);
+  const bladder = useTamagotchiStore((state) => state.bladder);
+  const hygiene = useTamagotchiStore((state) => state.hygiene);
   const maxHunger = useTamagotchiStore((state) => state.maxHunger);
   const maxEnergy = useTamagotchiStore((state) => state.maxEnergy);
   const maxHappiness = useTamagotchiStore((state) => state.maxHappiness);
+  const maxBladder = useTamagotchiStore((state) => state.maxBladder);
+  const maxHygiene = useTamagotchiStore((state) => state.maxHygiene);
   const feed = useTamagotchiStore((state) => state.feed);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
   const isEating = useTamagotchiStore((state) => state.isEating);
@@ -57,28 +81,13 @@ const UI = () => {
         Go back
       </button>
       <div className="status" ref={statusRef}>
-        <div className="need">
-          <span>Hunger: </span>
-          <progress value={hunger} max={maxHunger} />
-          <span>
-            {hunger} / {maxHunger}
-          </span>
-        </div>
-        <div className="need">
-          <span>Energy: </span>
-          <progress value={energy} max={maxEnergy} />
-          <span>
-            {energy} / {maxEnergy}
-          </span>
-        </div>
-        <div className="need">
-          <span>Happiness: </span>
-          <progress value={happiness} max={maxHappiness} />
-          <span>
-            {happiness} / {maxHappiness}
-          </span>
-        </div>
-
+        <Need label={"Hunger:"} value={hunger} maxValue={maxHunger} />
+        <Need label={"Energy:"} value={energy} maxValue={maxEnergy} />
+        <Need label={"Happiness:"} value={happiness} maxValue={maxHappiness} />
+        <Need label={"Bladder:"} value={bladder} maxValue={maxBladder} />
+        <Need label={"Hygiene:"} value={hygiene} maxValue={maxHygiene} />
+      </div>
+      <div className="debug">
         <button
           onClick={() => {
             if (!isEating) {

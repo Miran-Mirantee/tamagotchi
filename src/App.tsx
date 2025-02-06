@@ -18,7 +18,6 @@ import UI from "./components/UI";
  * 5. improve eat system
  * 6. add more interactions with pet (petting, fetch a ball)
  * 7. add activities to do with pet
- * 8. add more needs
  * 9. improve outside of tamagotchi scene
  * 10. add tamagotchi model
  * 11. add tamagotchi customization feature

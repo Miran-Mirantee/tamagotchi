@@ -5,6 +5,7 @@ import Toilet from "./furniture/Toilet";
 import Bathtub from "./furniture/Bathtub";
 import Bed from "./furniture/Bed";
 import Plate from "./furniture/Plate";
+import { useEffect, useRef } from "react";
 
 const Walls = () => {
   const c = useControls({
@@ -61,6 +62,19 @@ export default function Room() {
   const c = useControls({
     f: { value: { x: 0, z: 0 }, min: -5, max: 5, step: 0.01 },
   });
+  const bedRef = useRef<THREE.Group | null>(null);
+  useEffect(() => {
+    let size = new THREE.Vector3();
+    if (bedRef.current) {
+      const box = new THREE.Box3().setFromObject(bedRef.current);
+
+      //   box.expandByObject(bedRef.current);
+
+      box.getSize(size);
+      console.log(size, box);
+    }
+  }, [bedRef]);
+
   return (
     <>
       {/* position={[c.f.x, 0, c.f.z]} */}
@@ -69,7 +83,11 @@ export default function Room() {
       <Plate position={[3.2, 0.46, 2.83]} />
       <Toilet position={[-1.15, 0, -4.09]} />
       <Bathtub position={[-3.85, 0, -2.86]} scale={[1.4, 1.2, 1]} />
-      <Bed position={[3.9, 0, -3.0]} />
+      <Bed ref={bedRef} position={[3.9, 0, -3.0]} />
+      <mesh position={[c.f.x, 0.625, c.f.z]}>
+        <boxGeometry args={[1.5, 1.5, 1.5]} />
+        <meshBasicMaterial color={"red"} />
+      </mesh>
     </>
   );
 }

@@ -14,19 +14,19 @@ type TamagotchiState = {
   hunger: number;
   energy: number;
   happiness: number;
+  bladder: number;
+  hygiene: number;
   maxHunger: number;
   maxEnergy: number;
+  maxBladder: number;
+  maxHygiene: number;
   maxHappiness: number;
   isEating: boolean;
   currentFood: Food | null;
-  toPoint: Vector3;
-  fromPoint: Vector3;
   setBaseModelPath: (baseModelPath: string) => void;
   setIsEating: (isEating: boolean) => void;
   setCurrentFood: (food: Food | null) => void;
   feed: () => void;
-  setDestination: (toPoint: Vector3) => void;
-  setOrigin: (fromPoint: Vector3) => void;
 };
 
 const useTamagotchiStore = create<TamagotchiState>((set) => ({
@@ -34,13 +34,15 @@ const useTamagotchiStore = create<TamagotchiState>((set) => ({
   hunger: 0,
   energy: 0,
   happiness: 0,
+  bladder: 0,
+  hygiene: 0,
   maxHunger: 100,
   maxEnergy: 100,
   maxHappiness: 100,
+  maxBladder: 100,
+  maxHygiene: 100,
   isEating: false,
   currentFood: null,
-  toPoint: new Vector3(),
-  fromPoint: new Vector3(),
   setBaseModelPath: (baseModelPath: string) => set(() => ({ baseModelPath })),
   setIsEating: (isEating) => set(() => ({ isEating })),
   setCurrentFood: (currentFood) => set(() => ({ currentFood })),
@@ -65,8 +67,6 @@ const useTamagotchiStore = create<TamagotchiState>((set) => ({
       }
       return {};
     }),
-  setDestination: (toPoint) => set(() => ({ toPoint })),
-  setOrigin: (fromPoint) => set(() => ({ fromPoint })),
 }));
 
 export default useTamagotchiStore;

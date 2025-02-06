@@ -13,10 +13,6 @@ export default function PetInteractions() {
   const isEating = useTamagotchiStore((state) => state.isEating);
   const setIsEating = useTamagotchiStore((state) => state.setIsEating);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
-  const setDestination = useTamagotchiStore((state) => state.setDestination);
-  const toPoint = useTamagotchiStore((state) => state.toPoint);
-  const setOrigin = useTamagotchiStore((state) => state.setOrigin);
-  const fromPoint = useTamagotchiStore((state) => state.fromPoint);
   const [currentAnimation, setCurrentAnimation] = useState<ActionName>(
     "CharacterArmature|Idle"
   );
@@ -24,7 +20,7 @@ export default function PetInteractions() {
 
   const [target, setTarget] = useState<THREE.Vector3>(new THREE.Vector3());
   const [isMoving, setIsMoving] = useState(false);
-  // Function to get a random point within a radius
+  const [scale, setScale] = useState(0.75);
 
   // Set a new random target every few seconds
   useEffect(() => {
@@ -38,51 +34,19 @@ export default function PetInteractions() {
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
-  // Move the pet towards the target point
-  useFrame((state, delta) => {
-    if (!petRef.current) return;
-
-    // Prevent large delta values when resuming from inactivity
-    delta = Math.min(delta, 0.1); // Limit delta to prevent sudden large jumps
-
-    const distance = petRef.current.position.distanceTo(target);
-
-    // If close enough, stop moving and set new target
-    if (distance < 0.2) {
-      setIsMoving(false);
+  useEffect(() => {
+    if (baseModelPath.includes("Alien")) {
+      setScale(0.45);
+    } else if (baseModelPath.includes("Fish")) {
+      setScale(0.6);
+    } else if (baseModelPath.includes("Birb")) {
+      setScale(0.55);
+    } else if (baseModelPath.includes("Mushnub")) {
+      setScale(0.6);
     } else {
-      setIsMoving(true);
-
-      const direction = new THREE.Vector3()
-        .subVectors(target, petRef.current.position)
-        .normalize();
-
-      petRef.current.position.add(direction.multiplyScalar(delta * 2)); // Adjust speed here
+      setScale(0.75);
     }
-
-    // Make sure the pet faces the target
-    const directionToTarget = new THREE.Vector3().subVectors(
-      target,
-      petRef.current.position
-    );
-    const angle = Math.atan2(directionToTarget.x, directionToTarget.z);
-
-    // Fix for backward facing issue: Ensure the rotation is always facing the right direction
-    const currentRotation = petRef.current.rotation.y;
-    const angleDiff = angle - currentRotation;
-    let adjustedAngle = angle;
-    if (Math.abs(angleDiff) > Math.PI) {
-      adjustedAngle += angleDiff > 0 ? -2 * Math.PI : 2 * Math.PI; // Adjust angle to prevent backward rotation
-    }
-
-    // Smooth rotation with lerp for gradual turning
-    petRef.current.rotation.y = THREE.MathUtils.lerp(
-      currentRotation,
-      adjustedAngle,
-      0.1
-    );
-    console.log(delta);
-  });
+  }, [baseModelPath]);
 
   // play eating animation
   useEffect(() => {
@@ -96,6 +60,7 @@ export default function PetInteractions() {
     }
   }, [isEating]);
 
+  // play walking animation
   useEffect(() => {
     if (isMoving) {
       setCurrentAnimation("CharacterArmature|Walk");
@@ -103,6 +68,51 @@ export default function PetInteractions() {
       setCurrentAnimation("CharacterArmature|Idle");
     }
   }, [isMoving]);
+
+  // Move the pet towards the target point
+  // useFrame((state, delta) => {
+  //   if (!petRef.current) return;
+
+  //   // Prevent large delta values when resuming from inactivity
+  //   delta = Math.min(delta, 0.1); // Limit delta to prevent sudden large jumps
+
+  //   const distance = petRef.current.position.distanceTo(target);
+
+  //   // If close enough, stop moving and set new target
+  //   if (distance < 0.2) {
+  //     setIsMoving(false);
+  //   } else {
+  //     setIsMoving(true);
+
+  //     const direction = new THREE.Vector3()
+  //       .subVectors(target, petRef.current.position)
+  //       .normalize();
+
+  //     petRef.current.position.add(direction.multiplyScalar(delta * 2)); // Adjust speed here
+  //   }
+
+  //   // Make sure the pet faces the target
+  //   const directionToTarget = new THREE.Vector3().subVectors(
+  //     target,
+  //     petRef.current.position
+  //   );
+  //   const angle = Math.atan2(directionToTarget.x, directionToTarget.z);
+
+  //   // Fix for backward facing issue: Ensure the rotation is always facing the right direction
+  //   const currentRotation = petRef.current.rotation.y;
+  //   const angleDiff = angle - currentRotation;
+  //   let adjustedAngle = angle;
+  //   if (Math.abs(angleDiff) > Math.PI) {
+  //     adjustedAngle += angleDiff > 0 ? -2 * Math.PI : 2 * Math.PI; // Adjust angle to prevent backward rotation
+  //   }
+
+  //   // Smooth rotation with lerp for gradual turning
+  //   petRef.current.rotation.y = THREE.MathUtils.lerp(
+  //     currentRotation,
+  //     adjustedAngle,
+  //     0.1
+  //   );
+  // });
 
   useControls({
     animations: {
@@ -123,6 +133,7 @@ export default function PetInteractions() {
     },
   });
 
+  // Function to get a random point within a radius
   const getRandomPoint = (center: THREE.Vector3) => {
     const x = (Math.random() - 0.5) * WANDER_RANGE * 2 + center.x;
     const z = (Math.random() - 0.5) * WANDER_RANGE * 2 + center.z;
@@ -137,7 +148,7 @@ export default function PetInteractions() {
             ref={petRef}
             key={baseModelPath}
             url={baseModelPath}
-            scale={0.75}
+            scale={scale}
             animation={currentAnimation}
           />
         </Suspense>
