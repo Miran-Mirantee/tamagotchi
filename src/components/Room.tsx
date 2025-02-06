@@ -79,15 +79,15 @@ export default function Room() {
     <>
       {/* position={[c.f.x, 0, c.f.z]} */}
       <Walls />
-      <Table position={[3.2, 0, 3.2]} scale={[1, 0.4, 1]} />
+      <Table ref={bedRef} position={[3.2, 0, 3.2]} scale={[1, 0.4, 1]} />
       <Plate position={[3.2, 0.46, 2.83]} />
       <Toilet position={[-1.15, 0, -4.09]} />
       <Bathtub position={[-3.85, 0, -2.86]} scale={[1.4, 1.2, 1]} />
-      <Bed ref={bedRef} position={[3.9, 0, -3.0]} />
-      <mesh position={[c.f.x, 0.625, c.f.z]}>
+      <Bed position={[3.9, 0, -3.0]} />
+      {/* <mesh position={[c.f.x, 0.625, c.f.z]}>
         <boxGeometry args={[1.5, 1.5, 1.5]} />
         <meshBasicMaterial color={"red"} />
-      </mesh>
+      </mesh> */}
     </>
   );
 }
