@@ -23,7 +23,7 @@ type GLTFResult = GLTF & {
 
 export default function Cheeseburger(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
-    "/models/Cheeseburger.glb"
+    "/models/food/Cheeseburger.glb"
   ) as GLTFResult;
   return (
     <group {...props} dispose={null} scale={0.25} position-y={0.15}>
@@ -57,4 +57,4 @@ export default function Cheeseburger(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/models/Cheeseburger.glb");
+useGLTF.preload("/models/food/Cheeseburger.glb");

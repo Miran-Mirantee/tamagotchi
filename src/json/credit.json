@@ -1,13 +1,24 @@
 {
-  "Cheeseburger": "Cheeseburger by Quaternius (https://poly.pizza/m/TUnzvFg9ik)",
-  "Donut": "Donut by Quaternius (https://poly.pizza/m/UQRRrsP3wj)",
-  "Cat": "Cat by Quaternius (https://poly.pizza/m/2f54vbV0In)",
-  "Pigeon": "Pigeon by Quaternius (https://poly.pizza/m/9NGlBTpDEr)",
-  "Slime": "Pink Slime by Quaternius (https://poly.pizza/m/AyP8sQmDLh)",
-  "Chicken": "Chicken by Quaternius (https://poly.pizza/m/ineV9pU5VL)",
-  "Orc": "Orc Enemy by Quaternius (https://poly.pizza/m/Q3z8ZX4kUy)",
-  "Alien": "Alien by Quaternius (https://poly.pizza/m/sUTLXji0aL)",
-  "Fish": "Fish by Quaternius (https://poly.pizza/m/7V4gaDMQV8)",
-  "Birb": "Birb by Quaternius (https://poly.pizza/m/gZ2ExU9OAB)",
-  "Mushnub": "Mushnub by Quaternius (https://poly.pizza/m/LWKmS30Xxl)"
+  "food": {
+    "Cheeseburger": "Cheeseburger by Quaternius (https://poly.pizza/m/TUnzvFg9ik)",
+    "Donut": "Donut by Quaternius (https://poly.pizza/m/UQRRrsP3wj)"
+  },
+  "pet": {
+    "Cat": "Cat by Quaternius (https://poly.pizza/m/2f54vbV0In)",
+    "Pigeon": "Pigeon by Quaternius (https://poly.pizza/m/9NGlBTpDEr)",
+    "Slime": "Pink Slime by Quaternius (https://poly.pizza/m/AyP8sQmDLh)",
+    "Chicken": "Chicken by Quaternius (https://poly.pizza/m/ineV9pU5VL)",
+    "Orc": "Orc Enemy by Quaternius (https://poly.pizza/m/Q3z8ZX4kUy)",
+    "Alien": "Alien by Quaternius (https://poly.pizza/m/sUTLXji0aL)",
+    "Fish": "Fish by Quaternius (https://poly.pizza/m/7V4gaDMQV8)",
+    "Birb": "Birb by Quaternius (https://poly.pizza/m/gZ2ExU9OAB)",
+    "Mushnub": "Mushnub by Quaternius (https://poly.pizza/m/LWKmS30Xxl)"
+  },
+  "furniture": {
+    "Toilet": "Toilet by Quaternius (https://poly.pizza/m/WAu50yGFVt)",
+    "Table": "Table Round Small by Quaternius (https://poly.pizza/m/57W671WvS2)",
+    "Bathtub": "Bathtub by Quaternius (https://poly.pizza/m/wrOzCX3k48)",
+    "Bed": "Bed Single by Quaternius (https://poly.pizza/m/ianC28eMOF)",
+    "Plate": "Square Plate by Quaternius (https://poly.pizza/m/Gi5sAML9iw)"
+  }
 }

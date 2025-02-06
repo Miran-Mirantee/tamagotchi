@@ -84,15 +84,6 @@ export default function PetInteractions() {
     console.log(delta);
   });
 
-  // useEffect(() => {
-  //   if (petRef.current?.position) {
-  //     const coordinate = new THREE.Vector3();
-  //     coordinate.copy(petRef.current.position);
-  //     setOrigin(coordinate);
-  //     setDestination(coordinate);
-  //   }
-  // }, []);
-
   // play eating animation
   useEffect(() => {
     if (isEating) {
@@ -112,18 +103,6 @@ export default function PetInteractions() {
       setCurrentAnimation("CharacterArmature|Idle");
     }
   }, [isMoving]);
-
-  // // set origin and destination
-  // useEffect(() => {
-  //   if (petRef.current) {
-  //     // petRef.current.position.set(toPoint.x, 0, toPoint.z);
-  //     const direction = new THREE.Vector3()
-  //       .subVectors(toPoint, fromPoint)
-  //       .normalize();
-  //     const angle = Math.atan2(direction.x, direction.z);
-  //     petRef.current.rotation.y = angle;
-  //   }
-  // }, [toPoint]);
 
   useControls({
     animations: {
@@ -158,7 +137,7 @@ export default function PetInteractions() {
             ref={petRef}
             key={baseModelPath}
             url={baseModelPath}
-            scale={0.5}
+            scale={0.75}
             animation={currentAnimation}
           />
         </Suspense>

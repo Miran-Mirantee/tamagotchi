@@ -24,7 +24,7 @@ type GLTFResult = GLTF & {
 };
 
 export default function Donut(props: JSX.IntrinsicElements["group"]) {
-  const { nodes, materials } = useGLTF("/models/Donut.glb") as GLTFResult;
+  const { nodes, materials } = useGLTF("/models/food/Donut.glb") as GLTFResult;
   return (
     <group {...props} dispose={null} scale={0.45} position-y={0.11}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
@@ -63,4 +63,4 @@ export default function Donut(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/models/Donut.glb");
+useGLTF.preload("/models/food/Donut.glb");

@@ -101,63 +101,63 @@ const UI = () => {
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Cat.glb");
+            setBaseModelPath("./models/pet/Cat.glb");
           }}
         >
           Cat
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Pigeon.glb");
+            setBaseModelPath("./models/pet/Pigeon.glb");
           }}
         >
           Pigeon
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Slime.glb");
+            setBaseModelPath("./models/pet/Slime.glb");
           }}
         >
           Slime
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Chicken.glb");
+            setBaseModelPath("./models/pet/Chicken.glb");
           }}
         >
           Chicken
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Orc.glb");
+            setBaseModelPath("./models/pet/Orc.glb");
           }}
         >
           Orc
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Alien.glb");
+            setBaseModelPath("./models/pet/Alien.glb");
           }}
         >
           Alien
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Fish.glb");
+            setBaseModelPath("./models/pet/Fish.glb");
           }}
         >
           Fish
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Birb.glb");
+            setBaseModelPath("./models/pet/Birb.glb");
           }}
         >
           Birb
         </button>
         <button
           onClick={() => {
-            setBaseModelPath("./models/Mushnub.glb");
+            setBaseModelPath("./models/pet/Mushnub.glb");
           }}
         >
           Mushnub

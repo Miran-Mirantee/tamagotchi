@@ -4,15 +4,12 @@ import { Backdrop, CameraControls, Environment } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
 import Frame from "./components/Frame";
 import useCameraStore from "./stores/useCameraStore";
-import FoodTray from "./components/FoodTray";
 import PetInteractions from "./components/PetInteractions";
 import useTamagotchiStore from "./stores/useTamagotchiStore";
 
-export default function Experience() {
-  const setDestination = useTamagotchiStore((state) => state.setDestination);
-  const setOrigin = useTamagotchiStore((state) => state.setOrigin);
-  const toPoint = useTamagotchiStore((state) => state.toPoint);
+import Room from "./components/Room";
 
+export default function Experience() {
   const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
     useThree();
   const setZoomInTransition = useCameraStore(
@@ -70,31 +67,7 @@ export default function Experience() {
         <directionalLight intensity={1} position={[-3, 2, -6]} castShadow />
         <color args={["black"]} attach={"background"} />
         <PetInteractions />
-        <FoodTray position={[0, 0.05, 1]} />
-        {/* <Backdrop
-          receiveShadow
-          position={[0, 0, -1]}
-          scale={[10, 3, 2]}
-          floor={2} // Stretches the floor segment, 0.25 by default
-          segments={20} // Mesh-resolution, 20 by default
-        >
-          <meshStandardMaterial color="rgba(44,37,67,1)" />
-        </Backdrop> */}
-        <mesh
-          rotation={[Math.PI * -0.5, 0, 0]}
-          onPointerDown={(e) => {
-            // if (e.uv) {
-            //   const coordinate = new THREE.Vector3();
-            //   coordinate.setX(e.uv.x * 10 - 5);
-            //   coordinate.setZ((e.uv.y * 10 - 5) * -1);
-            //   setOrigin(toPoint);
-            //   setDestination(coordinate);
-            // }
-          }}
-        >
-          <planeGeometry args={[10, 10]} />
-          <meshStandardMaterial color="rgba(44,37,67,1)" />
-        </mesh>
+        <Room />
       </Frame>
 
       <CameraControls
