@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 import useUIStore from "../stores/useUIStore";
-import useTamagotchiStore, { Food } from "../stores/useTamagotchiStore";
+import useTamagotchiStore, {
+  Food,
+  PetAction,
+} from "../stores/useTamagotchiStore";
 import Cheeseburger from "./Cheeseburger";
 import Donut from "./Donut";
 
@@ -39,7 +42,8 @@ const UI = () => {
   const maxHygiene = useTamagotchiStore((state) => state.maxHygiene);
   const feed = useTamagotchiStore((state) => state.feed);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
-  const isEating = useTamagotchiStore((state) => state.isEating);
+  const currentAction = useTamagotchiStore((state) => state.currentAction);
+  const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
   const setBaseModelPath = useTamagotchiStore(
     (state) => state.setBaseModelPath
   );
@@ -90,20 +94,18 @@ const UI = () => {
       <div className="debug">
         <button
           onClick={() => {
-            if (!isEating) {
-              setCurrentFood(burger);
-              feed();
-            }
+            if (currentAction == PetAction.Eat) return;
+            setCurrentFood(burger);
+            feed();
           }}
         >
           feed burger
         </button>
         <button
           onClick={() => {
-            if (!isEating) {
-              setCurrentFood(donut);
-              feed();
-            }
+            if (currentAction == PetAction.Eat) return;
+            setCurrentFood(donut);
+            feed();
           }}
         >
           feed donut
@@ -170,6 +172,13 @@ const UI = () => {
           }}
         >
           Mushnub
+        </button>
+        <button
+          onClick={() => {
+            setIsFreeze(false);
+          }}
+        >
+          Unfreeze
         </button>
       </div>
     </div>

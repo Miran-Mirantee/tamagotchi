@@ -1,7 +1,7 @@
 import { Suspense, useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
-import useTamagotchiStore from "../stores/useTamagotchiStore";
+import useTamagotchiStore, { PetAction } from "../stores/useTamagotchiStore";
 import { useControls } from "leva";
 import Pet, { ActionName } from "./Pet";
 
@@ -13,17 +13,27 @@ const MODEL_WIDTH = 1.5;
 
 export default function PetInteractions() {
   const baseModelPath = useTamagotchiStore((state) => state.baseModelPath);
-  const isEating = useTamagotchiStore((state) => state.isEating);
-  const setIsEating = useTamagotchiStore((state) => state.setIsEating);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
+  const setMoveToLocation = useTamagotchiStore(
+    (state) => state.setMoveToLocation
+  );
+  const isFreeze = useTamagotchiStore((state) => state.isFreeze);
+  const currentAction = useTamagotchiStore((state) => state.currentAction);
+  const setCurrentAction = useTamagotchiStore(
+    (state) => state.setCurrentAction
+  );
+  const actions = useTamagotchiStore((state) => state.animationActions);
   const [currentAnimation, setCurrentAnimation] = useState<ActionName>(
     "CharacterArmature|Idle"
   );
   const petRef = useRef<THREE.Group | null>(null);
 
   const [target, setTarget] = useState<THREE.Vector3>(new THREE.Vector3());
-  const [isMoving, setIsMoving] = useState(false);
   const [scale, setScale] = useState(0.75);
+
+  useEffect(() => {
+    setMoveToLocation(moveToLocation);
+  }, []);
 
   // Set a new random target every few seconds
   useEffect(() => {
@@ -51,30 +61,51 @@ export default function PetInteractions() {
     }
   }, [baseModelPath]);
 
-  // play eating animation
   useEffect(() => {
-    if (isEating) {
-      setCurrentAnimation("CharacterArmature|Bite_Front");
-      setTimeout(() => {
-        setIsEating(false);
+    console.log(currentAction);
+    switch (currentAction) {
+      // play idling animation
+      case PetAction.Idle:
         setCurrentAnimation("CharacterArmature|Idle");
-        setCurrentFood(null);
-      }, 2000);
-    }
-  }, [isEating]);
+        break;
+      // play walking animation
+      case PetAction.Walk:
+        setCurrentAnimation("CharacterArmature|Walk");
+        break;
+      // play eating animation
+      case PetAction.Eat:
+        setCurrentAnimation("CharacterArmature|Bite_Front");
+        setTimeout(() => {
+          setCurrentAction(PetAction.Idle);
+          setCurrentFood(null);
+        }, 2000);
+        break;
+      // play sleeping animation
+      case PetAction.Sleep:
+        actions["CharacterArmature|Death"]!.clampWhenFinished = true;
+        actions["CharacterArmature|Death"]?.setLoop(THREE.LoopOnce, 1);
+        actions["CharacterArmature|Jump"]
+          ?.setLoop(THREE.LoopOnce, 1)
+          .setDuration(1);
 
-  // play walking animation
-  useEffect(() => {
-    if (isMoving) {
-      setCurrentAnimation("CharacterArmature|Walk");
-    } else {
-      setCurrentAnimation("CharacterArmature|Idle");
+        setCurrentAnimation("CharacterArmature|Jump");
+        setTimeout(() => {
+          setCurrentAnimation("CharacterArmature|Death");
+        }, 1000);
+
+        break;
     }
-  }, [isMoving]);
+  }, [currentAction]);
+
+  useEffect(() => {
+    // if (isFreeze) setCurrentAction(PetAction.Idle);
+  }, [isFreeze]);
 
   // Move the pet towards the target point
   useFrame((state, delta) => {
     if (!petRef.current) return;
+
+    if (isFreeze) return;
 
     delta = Math.min(delta, 0.1); // Prevent large jumps
 
@@ -82,11 +113,11 @@ export default function PetInteractions() {
 
     // Stop if close to the target
     if (distance < 0.2) {
-      setIsMoving(false);
+      setCurrentAction(PetAction.Idle);
       return;
     }
 
-    setIsMoving(true);
+    setCurrentAction(PetAction.Walk);
 
     // Compute direction
     const direction = new THREE.Vector3()
@@ -145,32 +176,30 @@ export default function PetInteractions() {
     },
   });
 
+  // Define obstacles with padding
+  const obstacles = [
+    {
+      minX: 2.9 - MODEL_WIDTH / 2,
+      maxX: 5 + MODEL_WIDTH / 2,
+      minZ: -5 - MODEL_WIDTH / 2,
+      maxZ: -1 + MODEL_WIDTH / 2,
+    },
+    {
+      minX: 2.23 - MODEL_WIDTH / 2,
+      maxX: 4.18 + MODEL_WIDTH / 2,
+      minZ: 2.23 - MODEL_WIDTH / 2,
+      maxZ: 4.18 + MODEL_WIDTH / 2,
+    },
+    {
+      minX: -5 - MODEL_WIDTH / 2,
+      maxX: 0 + MODEL_WIDTH / 2,
+      minZ: -5 - MODEL_WIDTH / 2,
+      maxZ: 0 + MODEL_WIDTH / 2,
+    },
+  ];
+
   // Function to check if a point is inside an obstacle
   const isInsideObstacle = (x: number, z: number) => {
-    const halfSize = MODEL_WIDTH / 2; // Half of model's width and depth
-
-    // Define obstacles with padding
-    const obstacles = [
-      {
-        minX: 2.9 - halfSize,
-        maxX: 5 + halfSize,
-        minZ: -5 - halfSize,
-        maxZ: -1 + halfSize,
-      },
-      {
-        minX: 2.23 - halfSize,
-        maxX: 4.18 + halfSize,
-        minZ: 2.23 - halfSize,
-        maxZ: 4.18 + halfSize,
-      },
-      {
-        minX: -5 - halfSize,
-        maxX: 0 + halfSize,
-        minZ: -5 - halfSize,
-        maxZ: 0 + halfSize,
-      },
-    ];
-
     // Check if (x, z) is within any obstacle
     return obstacles.some(
       ({ minX, maxX, minZ, maxZ }) =>
@@ -192,6 +221,18 @@ export default function PetInteractions() {
     } while (isInsideObstacle(x, z)); // Keep trying until a valid point is found
 
     return new THREE.Vector3(x, 0, z);
+  };
+
+  const moveToLocation = (
+    targetPosition: THREE.Vector3,
+    targetRotation: THREE.Vector3
+  ) => {
+    if (!petRef.current) return;
+
+    const euler = new THREE.Euler().setFromVector3(targetRotation);
+
+    petRef.current.position.copy(targetPosition);
+    petRef.current.rotation.copy(euler);
   };
 
   return (

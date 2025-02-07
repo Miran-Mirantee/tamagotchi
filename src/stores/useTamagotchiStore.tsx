@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Vector3 } from "three";
+import { Vector3, AnimationAction } from "three";
 
 export type Food = {
   name: string;
@@ -9,6 +9,14 @@ export type Food = {
   happiness: number;
 };
 
+export enum PetAction {
+  Idle = "Idle",
+  Walk = "Walk",
+  Eat = "Eat",
+  Sleep = "Sleep",
+  Bath = "Bath",
+  Toilet = "Toilet",
+}
 type TamagotchiState = {
   baseModelPath: string;
   hunger: number;
@@ -21,12 +29,22 @@ type TamagotchiState = {
   maxBladder: number;
   maxHygiene: number;
   maxHappiness: number;
-  isEating: boolean;
   currentFood: Food | null;
+  isFreeze: boolean;
+  currentAction: PetAction;
+  animationActions: { [x: string]: AnimationAction | null };
+  moveToLocation: (targetPosition: Vector3, targetRotation: Vector3) => void;
   setBaseModelPath: (baseModelPath: string) => void;
-  setIsEating: (isEating: boolean) => void;
   setCurrentFood: (food: Food | null) => void;
   feed: () => void;
+  setMoveToLocation: (
+    moveToLocation: TamagotchiState["moveToLocation"]
+  ) => void;
+  setIsFreeze: (isFreeze: boolean) => void;
+  setCurrentAction: (currentAction: PetAction) => void;
+  setAnimationActions: (
+    animationActions: TamagotchiState["animationActions"]
+  ) => void;
 };
 
 const useTamagotchiStore = create<TamagotchiState>((set) => ({
@@ -41,14 +59,16 @@ const useTamagotchiStore = create<TamagotchiState>((set) => ({
   maxHappiness: 100,
   maxBladder: 100,
   maxHygiene: 100,
-  isEating: false,
   currentFood: null,
+  isFreeze: false,
+  currentAction: PetAction.Idle,
+  animationActions: {},
+  moveToLocation: () => {},
   setBaseModelPath: (baseModelPath: string) => set(() => ({ baseModelPath })),
-  setIsEating: (isEating) => set(() => ({ isEating })),
   setCurrentFood: (currentFood) => set(() => ({ currentFood })),
   feed: () =>
     set((state) => {
-      if (!state.isEating && state.currentFood) {
+      if (state.currentAction != PetAction.Eat && state.currentFood) {
         return {
           hunger: Math.min(
             state.hunger + state.currentFood.hunger,
@@ -62,11 +82,15 @@ const useTamagotchiStore = create<TamagotchiState>((set) => ({
             state.happiness + state.currentFood.happiness,
             state.maxHappiness
           ),
-          isEating: true,
+          currentAction: PetAction.Eat,
         };
       }
       return {};
     }),
+  setMoveToLocation: (moveToLocation) => set(() => ({ moveToLocation })),
+  setIsFreeze: (isFreeze) => set(() => ({ isFreeze })),
+  setCurrentAction: (currentAction) => set(() => ({ currentAction })),
+  setAnimationActions: (animationActions) => set(() => ({ animationActions })),
 }));
 
 export default useTamagotchiStore;
