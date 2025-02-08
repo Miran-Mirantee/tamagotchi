@@ -18,16 +18,18 @@ export default function PetInteractions() {
     (state) => state.setMoveToLocation
   );
   const isFreeze = useTamagotchiStore((state) => state.isFreeze);
+  const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
   const currentAction = useTamagotchiStore((state) => state.currentAction);
   const setCurrentAction = useTamagotchiStore(
     (state) => state.setCurrentAction
   );
   const actions = useTamagotchiStore((state) => state.animationActions);
+  const useToilet = useTamagotchiStore((state) => state.useToilet);
+  const bath = useTamagotchiStore((state) => state.bath);
   const [currentAnimation, setCurrentAnimation] = useState<ActionName>(
     "CharacterArmature|Idle"
   );
   const petRef = useRef<THREE.Group | null>(null);
-
   const [target, setTarget] = useState<THREE.Vector3>(new THREE.Vector3());
   const [scale, setScale] = useState(0.75);
 
@@ -62,7 +64,8 @@ export default function PetInteractions() {
   }, [baseModelPath]);
 
   useEffect(() => {
-    console.log(currentAction);
+    if (!petRef.current) return;
+    // console.log(currentAction);
     switch (currentAction) {
       // play idling animation
       case PetAction.Idle:
@@ -83,26 +86,46 @@ export default function PetInteractions() {
       // play sleeping animation
       case PetAction.Sleep:
         actions["CharacterArmature|Death"]!.clampWhenFinished = true;
-        actions["CharacterArmature|Death"]?.setLoop(THREE.LoopOnce, 1);
-        actions["CharacterArmature|Jump"]
+        actions["CharacterArmature|Death"]
           ?.setLoop(THREE.LoopOnce, 1)
-          .setDuration(1);
-
-        setCurrentAnimation("CharacterArmature|Jump");
+          .setDuration(0.33);
+        setCurrentAnimation("CharacterArmature|Death");
+        break;
+      case PetAction.Toilet:
+        setCurrentAnimation("CharacterArmature|Dance");
+        useToilet();
         setTimeout(() => {
-          setCurrentAnimation("CharacterArmature|Death");
-        }, 1000);
-
+          setCurrentAction(PetAction.Idle);
+        }, 2000);
+        setTimeout(() => {
+          moveToLocation(
+            new THREE.Vector3(-0.94, 0, 1.12),
+            new THREE.Vector3()
+          );
+          setIsFreeze(false);
+        }, 2500);
+        break;
+      case PetAction.Bath:
+        setCurrentAnimation("CharacterArmature|Dance");
+        bath();
+        setTimeout(() => {
+          setCurrentAction(PetAction.Idle);
+        }, 2000);
+        setTimeout(() => {
+          moveToLocation(
+            new THREE.Vector3(-0.94, 0, 1.12),
+            new THREE.Vector3()
+          );
+          setIsFreeze(false);
+        }, 2500);
         break;
     }
   }, [currentAction]);
 
-  useEffect(() => {
-    // if (isFreeze) setCurrentAction(PetAction.Idle);
-  }, [isFreeze]);
+  useEffect(() => {}, [isFreeze]);
 
   // Move the pet towards the target point
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!petRef.current) return;
 
     if (isFreeze) return;
@@ -116,7 +139,6 @@ export default function PetInteractions() {
       setCurrentAction(PetAction.Idle);
       return;
     }
-
     setCurrentAction(PetAction.Walk);
 
     // Compute direction
@@ -156,6 +178,14 @@ export default function PetInteractions() {
       ROTATION_SPEED
     );
   });
+
+  // play animation
+  useEffect(() => {
+    actions[currentAnimation]?.reset().fadeIn(0.5).play();
+    return () => {
+      actions[currentAnimation]?.fadeOut(0.5);
+    };
+  }, [currentAnimation]);
 
   useControls({
     animations: {
@@ -244,7 +274,6 @@ export default function PetInteractions() {
             key={baseModelPath}
             url={baseModelPath}
             scale={scale}
-            animation={currentAnimation}
             position={[-2.5, 0, 2.5]}
           />
         </Suspense>

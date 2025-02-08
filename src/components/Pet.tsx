@@ -16,8 +16,8 @@ export type ActionName =
 
 const Pet = forwardRef<
   THREE.Group,
-  { url: string; animation: ActionName } & JSX.IntrinsicElements["group"]
->(({ url, animation, ...props }, ref) => {
+  { url: string } & JSX.IntrinsicElements["group"]
+>(({ url, ...props }, ref) => {
   const group = useRef<THREE.Group>(null);
   const { scene, nodes, animations } = useGLTF(url);
   const { actions } = useAnimations(animations, group);
@@ -28,13 +28,6 @@ const Pet = forwardRef<
   useEffect(() => {
     if (actions) setAnimationActions(actions);
   }, [actions]);
-
-  useEffect(() => {
-    actions[animation]?.reset().fadeIn(0.5).play();
-    return () => {
-      actions[animation]?.fadeOut(0.5);
-    };
-  }, [animation]);
 
   // Assign the forwarded ref to the internal ref
   useEffect(() => {

@@ -45,10 +45,12 @@ type TamagotchiState = {
   setAnimationActions: (
     animationActions: TamagotchiState["animationActions"]
   ) => void;
+  useToilet: () => void;
+  bath: () => void;
 };
 
 const useTamagotchiStore = create<TamagotchiState>((set) => ({
-  baseModelPath: "",
+  baseModelPath: "./models/pet/Cat.glb",
   hunger: 0,
   energy: 0,
   happiness: 0,
@@ -91,6 +93,14 @@ const useTamagotchiStore = create<TamagotchiState>((set) => ({
   setIsFreeze: (isFreeze) => set(() => ({ isFreeze })),
   setCurrentAction: (currentAction) => set(() => ({ currentAction })),
   setAnimationActions: (animationActions) => set(() => ({ animationActions })),
+  useToilet: () =>
+    set((state) => ({
+      bladder: Math.min(state.bladder + 50, state.maxBladder),
+    })),
+  bath: () =>
+    set((state) => ({
+      hygiene: Math.min(state.hygiene + 50, state.maxHygiene),
+    })),
 }));
 
 export default useTamagotchiStore;

@@ -67,10 +67,11 @@ const Walls = () => {
 
 export default function Room() {
   const c = useControls({
-    f: { value: { x: 0, z: 0 }, min: -5, max: 5, step: 0.01 },
+    f: { value: { x: 0, y: 0, z: 0 }, min: -5, max: 5, step: 0.01 },
   });
   const bedRef = useRef<THREE.Group | null>(null);
   const moveToLocation = useTamagotchiStore((state) => state.moveToLocation);
+  const currentAction = useTamagotchiStore((state) => state.currentAction);
   const setCurrentAction = useTamagotchiStore(
     (state) => state.setCurrentAction
   );
@@ -90,14 +91,12 @@ export default function Room() {
 
   return (
     <>
-      {/* position={[c.f.x, 0, c.f.z]} */}
       <Walls />
       <Table ref={bedRef} position={[3.2, 0, 3.2]} scale={[1, 0.4, 1]} />
       <Plate
         position={[3.2, 0.46, 2.83]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          console.log("eat time");
           moveToLocation(new THREE.Vector3(3.23, 0, 1.26), new THREE.Vector3());
           setIsFreeze(true);
           setCurrentAction(PetAction.Idle);
@@ -107,7 +106,12 @@ export default function Room() {
         position={[-1.15, 0, -4.09]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          console.log("toilet");
+          moveToLocation(
+            new THREE.Vector3(-1.15, 1, -3.8),
+            new THREE.Vector3()
+          );
+          setIsFreeze(true);
+          setCurrentAction(PetAction.Toilet);
         }}
       />
       <Bathtub
@@ -115,26 +119,41 @@ export default function Room() {
         scale={[1.4, 1.2, 1]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          console.log("bath time");
+          moveToLocation(
+            new THREE.Vector3(-3.87, 0.43, -3.13),
+            new THREE.Vector3(0, Math.PI * 0.5, 0)
+          );
+          setIsFreeze(true);
+          setCurrentAction(PetAction.Bath);
         }}
       />
       <Bed
         position={[3.9, 0, -3.0]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          console.log("bed time");
-          moveToLocation(
-            new THREE.Vector3(1.68, 0, -3.31),
-            new THREE.Vector3(0, Math.PI * 0.5, 0)
-          );
-          setIsFreeze(true);
-          setCurrentAction(PetAction.Sleep);
+          if (currentAction !== PetAction.Sleep) {
+            moveToLocation(
+              new THREE.Vector3(3.93, 0.751, -3.31),
+              new THREE.Vector3()
+            );
+            setIsFreeze(true);
+            setCurrentAction(PetAction.Sleep);
+          } else {
+            setCurrentAction(PetAction.Idle);
+            setTimeout(() => {
+              setIsFreeze(false);
+              moveToLocation(
+                new THREE.Vector3(1.68, 0, -3.31),
+                new THREE.Vector3(0, Math.PI * -0.5, 0)
+              );
+            }, 700);
+          }
         }}
       />
-      <mesh position={[c.f.x, 0.625, c.f.z]}>
+      {/* <mesh position={[c.f.x, 0.625 + c.f.y, c.f.z]}>
         <boxGeometry args={[1.5, 1.5, 1.5]} />
         <meshBasicMaterial color={"red"} />
-      </mesh>
+      </mesh> */}
     </>
   );
 }
