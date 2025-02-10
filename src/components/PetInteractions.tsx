@@ -65,7 +65,7 @@ export default function PetInteractions() {
 
   useEffect(() => {
     if (!petRef.current) return;
-    // console.log(currentAction);
+    console.log(currentAction);
     switch (currentAction) {
       // play idling animation
       case PetAction.Idle:
@@ -91,31 +91,40 @@ export default function PetInteractions() {
           .setDuration(0.33);
         setCurrentAnimation("CharacterArmature|Death");
         break;
+      //play waking up animation
+      case PetAction.WakeUp:
+        setCurrentAction(PetAction.Idle);
+        setTimeout(() => {
+          setIsFreeze(false);
+          moveToLocation(
+            new THREE.Vector3(1.68, 0, -3.31),
+            new THREE.Vector3(0, Math.PI * -0.5, 0)
+          );
+        }, 700);
+        break;
+      // play dance animation when using toilet
       case PetAction.Toilet:
         setCurrentAnimation("CharacterArmature|Dance");
         useToilet();
         setTimeout(() => {
-          setCurrentAction(PetAction.Idle);
-        }, 2000);
-        setTimeout(() => {
           moveToLocation(
             new THREE.Vector3(-0.94, 0, 1.12),
             new THREE.Vector3()
           );
+          setCurrentAction(PetAction.Idle);
           setIsFreeze(false);
         }, 2500);
         break;
+      // play dance animation when taking a bath
       case PetAction.Bath:
         setCurrentAnimation("CharacterArmature|Dance");
         bath();
         setTimeout(() => {
-          setCurrentAction(PetAction.Idle);
-        }, 2000);
-        setTimeout(() => {
           moveToLocation(
             new THREE.Vector3(-0.94, 0, 1.12),
             new THREE.Vector3()
           );
+          setCurrentAction(PetAction.Idle);
           setIsFreeze(false);
         }, 2500);
         break;

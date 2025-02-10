@@ -71,11 +71,11 @@ export default function Room() {
   });
   const bedRef = useRef<THREE.Group | null>(null);
   const moveToLocation = useTamagotchiStore((state) => state.moveToLocation);
-  const currentAction = useTamagotchiStore((state) => state.currentAction);
   const setCurrentAction = useTamagotchiStore(
     (state) => state.setCurrentAction
   );
   const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
+  const isFreeze = useTamagotchiStore((state) => state.isFreeze);
 
   useEffect(() => {
     let size = new THREE.Vector3();
@@ -89,6 +89,21 @@ export default function Room() {
     }
   }, [bedRef]);
 
+  const doAction = (
+    position: number[],
+    rotation: number[],
+    action: PetAction
+  ) => {
+    if (!isFreeze) {
+      moveToLocation(
+        new THREE.Vector3(position[0], position[1], position[2]),
+        new THREE.Vector3(rotation[0], rotation[1], rotation[2])
+      );
+      setIsFreeze(true);
+      setCurrentAction(action);
+    }
+  };
+
   return (
     <>
       <Walls />
@@ -97,21 +112,18 @@ export default function Room() {
         position={[3.2, 0.46, 2.83]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          moveToLocation(new THREE.Vector3(3.23, 0, 1.26), new THREE.Vector3());
-          setIsFreeze(true);
-          setCurrentAction(PetAction.Idle);
+          if (!isFreeze) {
+            doAction([3.23, 0, 1.26], [0, 0, 0], PetAction.Idle);
+          }
         }}
       />
       <Toilet
         position={[-1.15, 0, -4.09]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          moveToLocation(
-            new THREE.Vector3(-1.15, 1, -3.8),
-            new THREE.Vector3()
-          );
-          setIsFreeze(true);
-          setCurrentAction(PetAction.Toilet);
+          if (!isFreeze) {
+            doAction([-1.15, 1, -3.8], [0, 0, 0], PetAction.Toilet);
+          }
         }}
       />
       <Bathtub
@@ -119,34 +131,21 @@ export default function Room() {
         scale={[1.4, 1.2, 1]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          moveToLocation(
-            new THREE.Vector3(-3.87, 0.43, -3.13),
-            new THREE.Vector3(0, Math.PI * 0.5, 0)
-          );
-          setIsFreeze(true);
-          setCurrentAction(PetAction.Bath);
+          if (!isFreeze) {
+            doAction(
+              [-3.87, 0.43, -3.13],
+              [0, Math.PI * 0.5, 0],
+              PetAction.Bath
+            );
+          }
         }}
       />
       <Bed
         position={[3.9, 0, -3.0]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          if (currentAction !== PetAction.Sleep) {
-            moveToLocation(
-              new THREE.Vector3(3.93, 0.751, -3.31),
-              new THREE.Vector3()
-            );
-            setIsFreeze(true);
-            setCurrentAction(PetAction.Sleep);
-          } else {
-            setCurrentAction(PetAction.Idle);
-            setTimeout(() => {
-              setIsFreeze(false);
-              moveToLocation(
-                new THREE.Vector3(1.68, 0, -3.31),
-                new THREE.Vector3(0, Math.PI * -0.5, 0)
-              );
-            }, 700);
+          if (!isFreeze) {
+            doAction([3.93, 0.751, -3.31], [0, 0, 0], PetAction.Sleep);
           }
         }}
       />

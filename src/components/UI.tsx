@@ -43,6 +43,9 @@ const UI = () => {
   const feed = useTamagotchiStore((state) => state.feed);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
   const currentAction = useTamagotchiStore((state) => state.currentAction);
+  const setCurrentAction = useTamagotchiStore(
+    (state) => state.setCurrentAction
+  );
   const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
   const setBaseModelPath = useTamagotchiStore(
     (state) => state.setBaseModelPath
@@ -179,6 +182,14 @@ const UI = () => {
           }}
         >
           Unfreeze
+        </button>
+        <button
+          onClick={() => {
+            if (currentAction != PetAction.Sleep) return;
+            setCurrentAction(PetAction.WakeUp);
+          }}
+        >
+          Wake up
         </button>
       </div>
     </div>

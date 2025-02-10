@@ -5,17 +5,28 @@ import UI from "./components/UI";
 
 /**
  * TODO:
- * 1. add more types of food
- * 3. add model customization feature
- * 4. save data in localStorage
- * 5. improve eat system
- * 7. add activities to do with pet
- * 9. improve outside of tamagotchi scene
- * 10. add tamagotchi model
- * 11. add tamagotchi customization feature
- * 12. improve inside of tamagotchi scene
- * 13. (optional) add house customization feature
- * 15. (optional) add cooking feature
+ * - add more types of food
+ * - add model customization feature (changing color of material)
+ * - save data in localStorage
+ * - improve eat system (add food selection interface, use shader to imitate bitting effect on food)
+ * - add activities to do with pet
+ * - improve outside of tamagotchi scene
+ * - add tamagotchi model (probably have to model myself, wish me luck)
+ * - improve inside of tamagotchi scene
+ * - improve bath system (add water shader)
+ * - add highlight over clickable objects (post-processing and shader?)
+ * - gradually increasing need stats when doing activities (especially sleeping)
+ * - improve shadow
+ * - improve camera movement
+ * - add penalty from not satifying the need
+ * - (optional) add house customization feature
+ * - (optional) add cooking feature
+ * - (optional) add tamagotchi customization feature
+ */
+
+/**
+ * BUGS:
+ * - walk animation play instead of correct animation when clicking activity object (usually happen when it's wandering around and user click on an object)
  */
 
 export default function App() {
@@ -30,7 +41,7 @@ export default function App() {
         }}
         shadows
       >
-        <Perf position="bottom-left" />
+        <Perf position="top-left" />
         <Experience />
       </Canvas>
 

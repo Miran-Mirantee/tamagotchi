@@ -65,7 +65,7 @@ export default function Experience() {
         <ambientLight />
         <directionalLight intensity={2.5} position={[3, 6, 3]} castShadow />
         <directionalLight intensity={1} position={[-3, 2, -6]} castShadow />
-        <color args={["black"]} attach={"background"} />
+        <color args={["rgba(71,86,59,1)"]} attach={"background"} />
         <PetInteractions />
         <Room />
       </Frame>

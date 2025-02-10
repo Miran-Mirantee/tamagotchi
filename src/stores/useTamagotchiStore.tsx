@@ -14,6 +14,7 @@ export enum PetAction {
   Walk = "Walk",
   Eat = "Eat",
   Sleep = "Sleep",
+  WakeUp = "WakeUp",
   Bath = "Bath",
   Toilet = "Toilet",
 }
