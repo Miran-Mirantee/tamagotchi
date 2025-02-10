@@ -61,3 +61,45 @@ body,
   padding: 4px 8px;
   pointer-events: all;
 }
+
+.food-ui {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.food-container {
+  position: absolute;
+  bottom: 16px;
+  width: 960px;
+  left: calc(50% - 480px);
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 16px;
+  pointer-events: all;
+}
+
+.food-item {
+  border: 1px solid white;
+  border-radius: 16px;
+  height: 100px;
+  width: 100px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.food-item:hover {
+  cursor: pointer;
+}
+
+.food-back-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 18px;
+  user-select: none;
+  pointer-events: all;
+}

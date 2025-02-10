@@ -50,6 +50,10 @@ const UI = () => {
   const setBaseModelPath = useTamagotchiStore(
     (state) => state.setBaseModelPath
   );
+  const isBrowsingFood = useTamagotchiStore((state) => state.isBrowsingFood);
+  const setIsBrowsingFood = useTamagotchiStore(
+    (state) => state.setIsBrowsingFood
+  );
   const uiContainerRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -84,9 +88,11 @@ const UI = () => {
 
   return (
     <div className="ui-container" ref={uiContainerRef}>
-      <button className="back-btn" ref={backBtnRef} onClick={back}>
-        Go back
-      </button>
+      {!isBrowsingFood && (
+        <button className="back-btn" ref={backBtnRef} onClick={back}>
+          Go back
+        </button>
+      )}
       <div className="status" ref={statusRef}>
         <Need label={"Hunger:"} value={hunger} maxValue={maxHunger} />
         <Need label={"Energy:"} value={energy} maxValue={maxEnergy} />
@@ -95,24 +101,6 @@ const UI = () => {
         <Need label={"Hygiene:"} value={hygiene} maxValue={maxHygiene} />
       </div>
       <div className="debug">
-        <button
-          onClick={() => {
-            if (currentAction == PetAction.Eat) return;
-            setCurrentFood(burger);
-            feed();
-          }}
-        >
-          feed burger
-        </button>
-        <button
-          onClick={() => {
-            if (currentAction == PetAction.Eat) return;
-            setCurrentFood(donut);
-            feed();
-          }}
-        >
-          feed donut
-        </button>
         <button
           onClick={() => {
             setBaseModelPath("./models/pet/Cat.glb");
@@ -192,6 +180,44 @@ const UI = () => {
           Wake up
         </button>
       </div>
+
+      {isBrowsingFood && (
+        <div className="food-ui">
+          <div className="food-container">
+            <div
+              className="food-item"
+              onClick={() => {
+                setCurrentFood(burger);
+                feed();
+              }}
+            >
+              Burger
+            </div>
+            <div
+              className="food-item"
+              onClick={() => {
+                setCurrentFood(donut);
+                feed();
+              }}
+            >
+              Donut
+            </div>
+            <div className="food-item"></div>
+            <div className="food-item"></div>
+            <div className="food-item"></div>
+            <div className="food-item"></div>
+            <div className="food-item"></div>
+            <div className="food-item"></div>
+          </div>
+          <button
+            className="food-back-btn"
+            onClick={() => setIsBrowsingFood(false)}
+            disabled={currentAction == PetAction.Eat}
+          >
+            Stop feeding
+          </button>
+        </div>
+      )}
     </div>
   );
 };
