@@ -4,28 +4,7 @@ import useTamagotchiStore, {
   Food,
   PetAction,
 } from "../stores/useTamagotchiStore";
-import Cheeseburger from "./Cheeseburger";
-import Donut from "./Donut";
-
-const Need = ({
-  label,
-  value,
-  maxValue,
-}: {
-  label: string;
-  value: number;
-  maxValue: number;
-}) => {
-  return (
-    <div className="need">
-      <span>{label} </span>
-      <progress value={value} max={maxValue} />
-      <span>
-        {value} / {maxValue}
-      </span>
-    </div>
-  );
-};
+import food from "../json/food.json";
 
 const UI = () => {
   const back = useUIStore((state) => state.back);
@@ -58,22 +37,6 @@ const UI = () => {
   const backBtnRef = useRef<HTMLButtonElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
 
-  const burger: Food = {
-    name: "burger",
-    Model: Cheeseburger,
-    hunger: 50,
-    energy: 20,
-    happiness: 10,
-  };
-
-  const donut: Food = {
-    name: "burger",
-    Model: Donut,
-    hunger: 10,
-    energy: 40,
-    happiness: 50,
-  };
-
   useEffect(() => {
     if (isInside) {
       uiContainerRef.current!.style.opacity = "1";
@@ -85,6 +48,43 @@ const UI = () => {
       statusRef.current!.style.pointerEvents = "none";
     }
   }, [isInside]);
+
+  const Need = ({
+    label,
+    value,
+    maxValue,
+  }: {
+    label: string;
+    value: number;
+    maxValue: number;
+  }) => {
+    return (
+      <div className="need">
+        <span>{label} </span>
+        <progress value={value} max={maxValue} />
+        <span>
+          {value} / {maxValue}
+        </span>
+      </div>
+    );
+  };
+
+  const FoodItem = ({ food }: { food: Food }) => {
+    return (
+      <button
+        className="food-item"
+        title={food.name}
+        onClick={() => {
+          if (currentAction != PetAction.Eat) {
+            setCurrentFood(food);
+            feed();
+          }
+        }}
+      >
+        <img src={food.thumbnail} alt={food.name} />
+      </button>
+    );
+  };
 
   return (
     <div className="ui-container" ref={uiContainerRef}>
@@ -184,30 +184,9 @@ const UI = () => {
       {isBrowsingFood && (
         <div className="food-ui">
           <div className="food-container">
-            <div
-              className="food-item"
-              onClick={() => {
-                setCurrentFood(burger);
-                feed();
-              }}
-            >
-              Burger
-            </div>
-            <div
-              className="food-item"
-              onClick={() => {
-                setCurrentFood(donut);
-                feed();
-              }}
-            >
-              Donut
-            </div>
-            <div className="food-item"></div>
-            <div className="food-item"></div>
-            <div className="food-item"></div>
-            <div className="food-item"></div>
-            <div className="food-item"></div>
-            <div className="food-item"></div>
+            {food.map((food: Food, index) => (
+              <FoodItem key={index} food={food} />
+            ))}
           </div>
           <button
             className="food-back-btn"

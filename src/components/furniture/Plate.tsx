@@ -7,6 +7,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import useTamagotchiStore from "../../stores/useTamagotchiStore";
+import Food from "../Food";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -25,7 +26,7 @@ export default function Plate(props: JSX.IntrinsicElements["group"]) {
 
   return (
     <group {...props} dispose={null}>
-      <group position-y={-0.04}>{currentFood && <currentFood.Model />}</group>
+      {currentFood && <Food url={currentFood.model} scale={0.5} />}
 
       <group scale={[2.3, 1, 2.3]}>
         <mesh

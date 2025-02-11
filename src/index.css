@@ -89,10 +89,17 @@ body,
   width: 100px;
   color: white;
   flex-shrink: 0;
+  padding: 0;
 }
 
 .food-item:hover {
   cursor: pointer;
+}
+
+.food-item > img {
+  border-radius: 16px;
+  width: 100%;
+  height: 100%;
 }
 
 .food-back-btn {

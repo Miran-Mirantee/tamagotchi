@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Apple Green",
+    "hunger": 20,
+    "energy": 5,
+    "happiness": 5,
+    "thumbnail": "./images/apple-green.webp",
+    "model": "./models/food/Apple Green.glb"
+  },
+  {
+    "name": "Burger",
+    "hunger": 60,
+    "energy": 20,
+    "happiness": 15,
+    "thumbnail": "./images/burger.webp",
+    "model": "./models/food/Burger.glb"
+  },
+  {
+    "name": "Cheeseburger",
+    "hunger": 70,
+    "energy": 25,
+    "happiness": 20,
+    "thumbnail": "./images/cheeseburger.webp",
+    "model": "./models/food/Cheeseburger.glb"
+  },
+  {
+    "name": "Chicken Leg",
+    "hunger": 65,
+    "energy": 15,
+    "happiness": 10,
+    "thumbnail": "./images/chicken-leg.webp",
+    "model": "./models/food/Chicken Leg.glb"
+  },
+  {
+    "name": "Chocolate Bar",
+    "hunger": 15,
+    "energy": 10,
+    "happiness": 30,
+    "thumbnail": "./images/chocolate-bar.webp",
+    "model": "./models/food/Chocolate Bar.glb"
+  },
+  {
+    "name": "Croissant",
+    "hunger": 25,
+    "energy": 10,
+    "happiness": 15,
+    "thumbnail": "./images/croissant.webp",
+    "model": "./models/food/Croissant.glb"
+  },
+  {
+    "name": "Cupcake",
+    "hunger": 20,
+    "energy": 5,
+    "happiness": 25,
+    "thumbnail": "./images/cupcake.webp",
+    "model": "./models/food/Cupcake.glb"
+  },
+  {
+    "name": "Donut",
+    "hunger": 30,
+    "energy": 5,
+    "happiness": 20,
+    "thumbnail": "./images/donut.webp",
+    "model": "./models/food/Donut.glb"
+  },
+  {
+    "name": "Egg Fried",
+    "hunger": 50,
+    "energy": 15,
+    "happiness": 10,
+    "thumbnail": "./images/egg-fried.webp",
+    "model": "./models/food/Egg Fried.glb"
+  },
+  {
+    "name": "Hotdog",
+    "hunger": 50,
+    "energy": 10,
+    "happiness": 15,
+    "thumbnail": "./images/hotdog.webp",
+    "model": "./models/food/Hotdog.glb"
+  },
+  {
+    "name": "Pancakes Stack",
+    "hunger": 60,
+    "energy": 20,
+    "happiness": 25,
+    "thumbnail": "./images/pancakes-stack.webp",
+    "model": "./models/food/Pancakes Stack.glb"
+  },
+  {
+    "name": "Pizza Slice",
+    "hunger": 60,
+    "energy": 15,
+    "happiness": 20,
+    "thumbnail": "./images/pizza-slice.webp",
+    "model": "./models/food/Pizza Slice.glb"
+  },
+  {
+    "name": "Steak",
+    "hunger": 70,
+    "energy": 25,
+    "happiness": 15,
+    "thumbnail": "./images/steak.webp",
+    "model": "./models/food/Steak.glb"
+  },
+  {
+    "name": "Sushi Nigiri",
+    "hunger": 40,
+    "energy": 10,
+    "happiness": 20,
+    "thumbnail": "./images/sushi-nigiri.webp",
+    "model": "./models/food/Sushi Nigiri.glb"
+  },
+  {
+    "name": "Waffle",
+    "hunger": 30,
+    "energy": 15,
+    "happiness": 25,
+    "thumbnail": "./images/waffle.webp",
+    "model": "./models/food/Waffle.glb"
+  }
+]

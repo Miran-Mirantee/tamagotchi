@@ -3,10 +3,12 @@ import { Vector3, AnimationAction } from "three";
 
 export type Food = {
   name: string;
-  Model: React.ComponentType<JSX.IntrinsicElements["group"]>;
   hunger: number;
   energy: number;
   happiness: number;
+  thumbnail: string;
+  model: string;
+  // Model: React.ComponentType<JSX.IntrinsicElements["group"]>;
 };
 
 export enum PetAction {
