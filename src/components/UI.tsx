@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import useUIStore from "../stores/useUIStore";
+import useCameraStore from "../stores/useCameraStore";
 import useTamagotchiStore, {
   Food,
   PetAction,
@@ -31,6 +32,7 @@ const UI = () => {
   const setBaseModelPath = useTamagotchiStore(
     (state) => state.setBaseModelPath
   );
+  const exitFocusMode = useCameraStore((state) => state.exitFocusMode);
   const uiContainerRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,11 @@ const UI = () => {
         </span>
       </div>
     );
+  };
+
+  const onStopFeedingClick = () => {
+    setIsBrowsingFood(false);
+    exitFocusMode();
   };
 
   const FoodItem = ({ food }: { food: Food }) => {
@@ -188,7 +195,7 @@ const UI = () => {
           </div>
           <button
             className="food-back-btn"
-            onClick={() => setIsBrowsingFood(false)}
+            onClick={onStopFeedingClick}
             disabled={currentAction == PetAction.Eat}
           >
             Stop feeding

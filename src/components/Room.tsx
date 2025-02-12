@@ -10,6 +10,7 @@ import Plate from "./furniture/Plate";
 import useTamagotchiStore, { PetAction } from "../stores/useTamagotchiStore";
 import useUIStore from "../stores/useUIStore";
 import { CameraControls } from "@react-three/drei";
+import useCameraStore from "../stores/useCameraStore";
 
 const Walls = () => {
   const c = useControls({
@@ -82,6 +83,7 @@ export default function Room() {
   );
   const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
   const isFreeze = useTamagotchiStore((state) => state.isFreeze);
+  const setExitFocusMode = useCameraStore((state) => state.setExitFocusMode);
 
   const { controls }: { controls: CameraControls } = useThree();
 
@@ -98,21 +100,17 @@ export default function Room() {
   }, [bedRef]);
 
   useEffect(() => {
-    if (!isBrowsingFood && controls) {
-      console.log(controls);
-      zoomOut();
-      // setIsFreeze(false);
-    }
-  }, [isBrowsingFood, controls, isFreeze]);
+    setExitFocusMode(exitFocusMode);
+  }, [controls]);
 
-  const zoomIn = (position: THREE.Vector3, focus: THREE.Vector3) => {
+  const enterFocusMode = (position: THREE.Vector3, focus: THREE.Vector3) => {
     controls.setLookAt(...position.toArray(), ...focus.toArray(), true);
     controls.dollySpeed = 0;
     controls.truckSpeed = 0;
   };
 
-  const zoomOut = () => {
-    console.log("zoomout");
+  const exitFocusMode = () => {
+    setIsFreeze(false);
     controls.dollySpeed = 1;
     controls.truckSpeed = 2;
     // zooming out code goes here...
@@ -143,7 +141,7 @@ export default function Room() {
           e.stopPropagation();
 
           if (!isFreeze) {
-            zoomIn(
+            enterFocusMode(
               new THREE.Vector3(3.2, 2.46, 5.83),
               new THREE.Vector3(3.2, 0.46, 2.83)
             );
