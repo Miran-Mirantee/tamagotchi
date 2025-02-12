@@ -8,6 +8,7 @@ import Bathtub from "./furniture/Bathtub";
 import Bed from "./furniture/Bed";
 import Plate from "./furniture/Plate";
 import useTamagotchiStore, { PetAction } from "../stores/useTamagotchiStore";
+import useUIStore from "../stores/useUIStore";
 import { CameraControls } from "@react-three/drei";
 
 const Walls = () => {
@@ -73,16 +74,15 @@ export default function Room() {
     f: { value: { x: 0, y: 0, z: 0 }, min: -5, max: 5, step: 0.01 },
   });
   const bedRef = useRef<THREE.Group | null>(null);
+  const isBrowsingFood = useUIStore((state) => state.isBrowsingFood);
+  const setIsBrowsingFood = useUIStore((state) => state.setIsBrowsingFood);
   const moveToLocation = useTamagotchiStore((state) => state.moveToLocation);
   const setCurrentAction = useTamagotchiStore(
     (state) => state.setCurrentAction
   );
   const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
   const isFreeze = useTamagotchiStore((state) => state.isFreeze);
-  const isBrowsingFood = useTamagotchiStore((state) => state.isBrowsingFood);
-  const setIsBrowsingFood = useTamagotchiStore(
-    (state) => state.setIsBrowsingFood
-  );
+
   const { controls }: { controls: CameraControls } = useThree();
 
   useEffect(() => {
@@ -98,9 +98,10 @@ export default function Room() {
   }, [bedRef]);
 
   useEffect(() => {
-    if (!isBrowsingFood && controls && isFreeze) {
+    if (!isBrowsingFood && controls) {
+      console.log(controls);
       zoomOut();
-      setIsFreeze(false);
+      // setIsFreeze(false);
     }
   }, [isBrowsingFood, controls, isFreeze]);
 
@@ -111,6 +112,7 @@ export default function Room() {
   };
 
   const zoomOut = () => {
+    console.log("zoomout");
     controls.dollySpeed = 1;
     controls.truckSpeed = 2;
     // zooming out code goes here...

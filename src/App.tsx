@@ -5,7 +5,6 @@ import UI from "./components/UI";
 
 /**
  * TODO:
- * - add more types of food
  * - add model customization feature (changing color of material)
  * - save data in localStorage
  * - improve eat system (add food selection interface, use shader to imitate bitting effect on food)

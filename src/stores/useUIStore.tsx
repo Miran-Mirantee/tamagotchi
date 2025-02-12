@@ -5,6 +5,8 @@ type UIState = {
   isInside: boolean;
   setBackFunction: (back: UIState["back"]) => void;
   setIsInside: (isInside: boolean) => void;
+  isBrowsingFood: boolean;
+  setIsBrowsingFood: (isBrowsingFood: boolean) => void;
 };
 
 const useUIStore = create<UIState>((set) => ({
@@ -12,6 +14,8 @@ const useUIStore = create<UIState>((set) => ({
   isInside: false,
   setBackFunction: (back: UIState["back"]) => set(() => ({ back })),
   setIsInside: (isInside) => set(() => ({ isInside })),
+  isBrowsingFood: false,
+  setIsBrowsingFood: (isBrowsingFood) => set(() => ({ isBrowsingFood })),
 }));
 
 export default useUIStore;

@@ -8,7 +8,6 @@ export type Food = {
   happiness: number;
   thumbnail: string;
   model: string;
-  // Model: React.ComponentType<JSX.IntrinsicElements["group"]>;
 };
 
 export enum PetAction {
@@ -36,8 +35,6 @@ type TamagotchiState = {
   isFreeze: boolean;
   currentAction: PetAction;
   animationActions: { [x: string]: AnimationAction | null };
-  isBrowsingFood: boolean;
-  setIsBrowsingFood: (isBrowsingFood: boolean) => void;
   moveToLocation: (targetPosition: Vector3, targetRotation: Vector3) => void;
   setBaseModelPath: (baseModelPath: string) => void;
   setCurrentFood: (food: Food | null) => void;
@@ -70,8 +67,6 @@ const useTamagotchiStore = create<TamagotchiState>((set) => ({
   isFreeze: false,
   currentAction: PetAction.Idle,
   animationActions: {},
-  isBrowsingFood: false,
-  setIsBrowsingFood: (isBrowsingFood) => set(() => ({ isBrowsingFood })),
   moveToLocation: () => {},
   setBaseModelPath: (baseModelPath: string) => set(() => ({ baseModelPath })),
   setCurrentFood: (currentFood) => set(() => ({ currentFood })),

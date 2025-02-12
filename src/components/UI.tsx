@@ -9,6 +9,8 @@ import food from "../json/food.json";
 const UI = () => {
   const back = useUIStore((state) => state.back);
   const isInside = useUIStore((state) => state.isInside);
+  const isBrowsingFood = useUIStore((state) => state.isBrowsingFood);
+  const setIsBrowsingFood = useUIStore((state) => state.setIsBrowsingFood);
   const hunger = useTamagotchiStore((state) => state.hunger);
   const energy = useTamagotchiStore((state) => state.energy);
   const happiness = useTamagotchiStore((state) => state.happiness);
@@ -28,10 +30,6 @@ const UI = () => {
   const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
   const setBaseModelPath = useTamagotchiStore(
     (state) => state.setBaseModelPath
-  );
-  const isBrowsingFood = useTamagotchiStore((state) => state.isBrowsingFood);
-  const setIsBrowsingFood = useTamagotchiStore(
-    (state) => state.setIsBrowsingFood
   );
   const uiContainerRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);

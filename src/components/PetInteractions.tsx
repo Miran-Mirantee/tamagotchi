@@ -131,7 +131,9 @@ export default function PetInteractions() {
     }
   }, [currentAction]);
 
-  useEffect(() => {}, [isFreeze]);
+  useEffect(() => {
+    console.log("isFreeze", isFreeze);
+  }, [isFreeze]);
 
   // Move the pet towards the target point
   useFrame((_, delta) => {
