@@ -1,32 +1,20 @@
 import { create } from "zustand";
-import * as THREE from "three";
 
 type CameraState = {
-  zoomInTransition: (frame: THREE.Group) => void;
-  zoomOutTransition: (frame: THREE.Group) => void;
+  enterFocusMode: () => void;
   exitFocusMode: () => void;
-  setZoomInTransition: (
-    zoomInTransition: CameraState["zoomInTransition"]
-  ) => void;
-  setZoomOutTransition: (
-    zoomOutTransition: CameraState["zoomOutTransition"]
-  ) => void;
+  setEnterFocusMode: (enterFocusMode: CameraState["enterFocusMode"]) => void;
   setExitFocusMode: (exitFocusMode: CameraState["exitFocusMode"]) => void;
 };
 
 const useCameraStore = create<CameraState>((set) => ({
-  zoomInTransition: () => {
-    console.log("zoom in");
-  },
-  zoomOutTransition: () => {
-    console.log("zoom out");
-  },
   exitFocusMode: () => {
     console.log("exit focus mode");
   },
-  setZoomInTransition: (zoomInTransition) => set(() => ({ zoomInTransition })),
-  setZoomOutTransition: (zoomOutTransition) =>
-    set(() => ({ zoomOutTransition })),
+  enterFocusMode: () => {
+    console.log("exit focus mode");
+  },
+  setEnterFocusMode: (enterFocusMode) => set(() => ({ enterFocusMode })),
   setExitFocusMode: (exitFocusMode) => set(() => ({ exitFocusMode })),
 }));
 

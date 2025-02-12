@@ -11,6 +11,7 @@ import useTamagotchiStore, { PetAction } from "../stores/useTamagotchiStore";
 import useUIStore from "../stores/useUIStore";
 import { CameraControls } from "@react-three/drei";
 import useCameraStore from "../stores/useCameraStore";
+import { enterFocusMode, exitFocusMode } from "../Utils/cameraController";
 
 const Walls = () => {
   const c = useControls({
@@ -75,7 +76,6 @@ export default function Room() {
     f: { value: { x: 0, y: 0, z: 0 }, min: -5, max: 5, step: 0.01 },
   });
   const bedRef = useRef<THREE.Group | null>(null);
-  const isBrowsingFood = useUIStore((state) => state.isBrowsingFood);
   const setIsBrowsingFood = useUIStore((state) => state.setIsBrowsingFood);
   const moveToLocation = useTamagotchiStore((state) => state.moveToLocation);
   const setCurrentAction = useTamagotchiStore(
@@ -84,6 +84,7 @@ export default function Room() {
   const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
   const isFreeze = useTamagotchiStore((state) => state.isFreeze);
   const setExitFocusMode = useCameraStore((state) => state.setExitFocusMode);
+  const setEnterFocusMode = useCameraStore((state) => state.setEnterFocusMode);
 
   const { controls }: { controls: CameraControls } = useThree();
 
@@ -100,21 +101,15 @@ export default function Room() {
   }, [bedRef]);
 
   useEffect(() => {
-    setExitFocusMode(exitFocusMode);
+    setExitFocusMode(() => exitFocusMode(controls));
+    setEnterFocusMode(() =>
+      enterFocusMode(
+        controls,
+        new THREE.Vector3(3.2, 2.46, 5.83),
+        new THREE.Vector3(3.2, 0.46, 2.83)
+      )
+    );
   }, [controls]);
-
-  const enterFocusMode = (position: THREE.Vector3, focus: THREE.Vector3) => {
-    controls.setLookAt(...position.toArray(), ...focus.toArray(), true);
-    controls.dollySpeed = 0;
-    controls.truckSpeed = 0;
-  };
-
-  const exitFocusMode = () => {
-    setIsFreeze(false);
-    controls.dollySpeed = 1;
-    controls.truckSpeed = 2;
-    // zooming out code goes here...
-  };
 
   const doAction = (
     position: number[],
@@ -141,10 +136,6 @@ export default function Room() {
           e.stopPropagation();
 
           if (!isFreeze) {
-            enterFocusMode(
-              new THREE.Vector3(3.2, 2.46, 5.83),
-              new THREE.Vector3(3.2, 0.46, 2.83)
-            );
             doAction([3.23, 0, 1.26], [0, 0, 0], PetAction.Idle);
             setIsBrowsingFood(true);
           }

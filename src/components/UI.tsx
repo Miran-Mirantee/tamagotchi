@@ -72,6 +72,7 @@ const UI = () => {
   const onStopFeedingClick = () => {
     setIsBrowsingFood(false);
     exitFocusMode();
+    setIsFreeze(false);
   };
 
   const FoodItem = ({ food }: { food: Food }) => {

@@ -1,14 +1,16 @@
 import * as THREE from "three";
 import React, { useRef, useState, useEffect } from "react";
 import {
+  CameraControls,
   MeshPortalMaterial,
   PortalMaterialType,
   useCursor,
 } from "@react-three/drei";
-import { ThreeElements } from "@react-three/fiber";
+import { ThreeElements, useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import useUIStore from "../stores/useUIStore";
 import useCameraStore from "../stores/useCameraStore";
+import { zoomTransition } from "../Utils/cameraController";
 
 // Add your custom prop types for the component
 type FrameProps = {
@@ -24,26 +26,34 @@ const Frame = ({ width = 2, height = 2, children, ...props }: FrameProps) => {
   const setBackFunction = useUIStore((state) => state.setBackFunction);
   const setIsInside = useUIStore((state) => state.setIsInside);
   const isInside = useUIStore((state) => state.isInside);
-  const zoomInTransition = useCameraStore((state) => state.zoomInTransition);
-  const zoomOutTransition = useCameraStore((state) => state.zoomOutTransition);
+  const isBrowsingFood = useUIStore((state) => state.isBrowsingFood);
+  const enterFocusMode = useCameraStore((state) => state.enterFocusMode);
+  const { controls }: { controls: CameraControls } = useThree();
 
   useCursor(hovered);
 
-  // useEffect(() => {
-  //   if (portal.current) {
-  //     console.log("Portal material is ready", portal.current);
-  //   }
-  // }, []);
   useEffect(() => {
     setBackFunction(back);
-  }, [setBackFunction, zoomOutTransition]);
+  }, [setBackFunction, controls]);
+
+  useEffect(() => {
+    if (isBrowsingFood) {
+      // have to call this outside of the portal for correctly camera transition
+      enterFocusMode();
+    }
+  }, [isBrowsingFood]);
 
   const back = () => {
     gsap.to(portal.current, {
       blend: 0,
       duration: 0.5,
     });
-    zoomOutTransition(frame.current!);
+    zoomTransition(
+      frame.current!,
+      controls,
+      { x: 0, y: 2, z: 3 },
+      { x: 0, y: 0, z: 0 }
+    );
     setIsInside(false);
   };
 
@@ -52,7 +62,12 @@ const Frame = ({ width = 2, height = 2, children, ...props }: FrameProps) => {
       blend: 1,
       duration: 0.5,
     });
-    zoomInTransition(frame.current!);
+    zoomTransition(
+      frame.current!,
+      controls,
+      { x: 0, y: 0.45, z: 2.735 },
+      { x: 0, y: -0.5, z: 0 }
+    );
     setIsInside(true);
     hover(false);
   };
