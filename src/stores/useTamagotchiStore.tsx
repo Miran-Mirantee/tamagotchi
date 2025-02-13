@@ -19,6 +19,7 @@ export enum PetAction {
   Bath = "Bath",
   Toilet = "Toilet",
 }
+
 type TamagotchiState = {
   baseModelPath: string;
   hunger: number;

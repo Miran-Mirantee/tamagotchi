@@ -91,6 +91,7 @@ body,
   color: white;
   flex-shrink: 0;
   padding: 0;
+  background-color: rgb(26, 18, 75);
 }
 
 .food-item:hover {

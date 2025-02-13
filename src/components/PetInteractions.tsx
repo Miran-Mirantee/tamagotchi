@@ -133,6 +133,10 @@ export default function PetInteractions() {
 
   useEffect(() => {
     console.log("isFreeze", isFreeze);
+    // if not freeze then always walk
+    if (!isFreeze) {
+      setCurrentAction(PetAction.Walk);
+    }
   }, [isFreeze]);
 
   // Move the pet towards the target point
@@ -150,7 +154,6 @@ export default function PetInteractions() {
       setCurrentAction(PetAction.Idle);
       return;
     }
-    setCurrentAction(PetAction.Walk);
 
     // Compute direction
     const direction = new THREE.Vector3()

@@ -7,7 +7,7 @@ import UI from "./components/UI";
  * TODO:
  * - add model customization feature (changing color of material)
  * - save data in localStorage
- * - improve eat system (add food selection interface, use shader to imitate bitting effect on food)
+ * - use shader to imitate bitting effect on food
  * - add activities to do with pet
  * - improve outside of tamagotchi scene
  * - add tamagotchi model (probably have to model myself, wish me luck)
@@ -25,7 +25,6 @@ import UI from "./components/UI";
 
 /**
  * BUGS:
- * - walk animation play instead of correct animation when clicking activity object (usually happen when it's wandering around and user click on an object)
  */
 
 export default function App() {
