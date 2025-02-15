@@ -116,14 +116,13 @@ export default function Room() {
     rotation: number[],
     action: PetAction
   ) => {
-    if (!isFreeze) {
-      moveToLocation(
-        new THREE.Vector3(position[0], position[1], position[2]),
-        new THREE.Vector3(rotation[0], rotation[1], rotation[2])
-      );
-      setIsFreeze(true);
-      setCurrentAction(action);
-    }
+    moveToLocation(
+      new THREE.Vector3(position[0], position[1], position[2]),
+      new THREE.Vector3(rotation[0], rotation[1], rotation[2])
+    );
+    setIsFreeze(true);
+    console.log("you are suppose to do this action: ", action, Date.now());
+    setCurrentAction(action);
   };
 
   return (

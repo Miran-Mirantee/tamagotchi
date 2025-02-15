@@ -52,7 +52,7 @@ type TamagotchiState = {
   bath: () => void;
 };
 
-const useTamagotchiStore = create<TamagotchiState>((set) => ({
+const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
   baseModelPath: "./models/pet/Cat.glb",
   hunger: 0,
   energy: 0,
@@ -94,7 +94,11 @@ const useTamagotchiStore = create<TamagotchiState>((set) => ({
     }),
   setMoveToLocation: (moveToLocation) => set(() => ({ moveToLocation })),
   setIsFreeze: (isFreeze) => set(() => ({ isFreeze })),
-  setCurrentAction: (currentAction) => set(() => ({ currentAction })),
+  setCurrentAction: (currentAction) => {
+    // YOU ARE NOT SUPPOSE TO WALK IF YOU ARE FROZEN, STOP!
+    if (get().isFreeze && currentAction == PetAction.Walk) return;
+    set(() => ({ currentAction }));
+  },
   setAnimationActions: (animationActions) => set(() => ({ animationActions })),
   useToilet: () =>
     set((state) => ({
