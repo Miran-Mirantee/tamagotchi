@@ -21,6 +21,8 @@ import UI from "./components/UI";
  * - (optional) add house customization feature
  * - (optional) add cooking feature
  * - (optional) add tamagotchi customization feature
+ * - (optional) add responsiveness
+ * - (optional??) support mobile view
  */
 
 /**

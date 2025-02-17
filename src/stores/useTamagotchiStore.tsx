@@ -50,6 +50,8 @@ type TamagotchiState = {
   ) => void;
   useToilet: () => void;
   bath: () => void;
+  sleep: (increase: number) => void;
+  reset: () => void;
 };
 
 const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
@@ -107,6 +109,18 @@ const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
   bath: () =>
     set((state) => ({
       hygiene: Math.min(state.hygiene + 50, state.maxHygiene),
+    })),
+  sleep: (increase) =>
+    set((state) => ({
+      energy: Math.min(state.energy + increase, state.maxEnergy),
+    })),
+  reset: () =>
+    set(() => ({
+      hunger: 0,
+      energy: 0,
+      happiness: 0,
+      bladder: 0,
+      hygiene: 0,
     })),
 }));
 

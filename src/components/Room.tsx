@@ -121,7 +121,6 @@ export default function Room() {
       new THREE.Vector3(rotation[0], rotation[1], rotation[2])
     );
     setIsFreeze(true);
-    console.log("you are suppose to do this action: ", action, Date.now());
     setCurrentAction(action);
   };
 

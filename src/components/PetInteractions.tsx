@@ -10,6 +10,7 @@ const WANDER_DELAY = 10; // How long to wait before picking a new target in seco
 const WANDER_SPEED = 2;
 const ROTATION_SPEED = 0.1;
 const MODEL_WIDTH = 1.5;
+const BITE_NUM = 5;
 
 export default function PetInteractions() {
   const baseModelPath = useTamagotchiStore((state) => state.baseModelPath);
@@ -26,6 +27,7 @@ export default function PetInteractions() {
   const actions = useTamagotchiStore((state) => state.animationActions);
   const useToilet = useTamagotchiStore((state) => state.useToilet);
   const bath = useTamagotchiStore((state) => state.bath);
+  const sleep = useTamagotchiStore((state) => state.sleep);
   const [currentAnimation, setCurrentAnimation] = useState<ActionName>(
     "CharacterArmature|Idle"
   );
@@ -65,7 +67,7 @@ export default function PetInteractions() {
 
   useEffect(() => {
     if (!petRef.current) return;
-    console.log(currentAction);
+    // console.log(currentAction);
     switch (currentAction) {
       // play idling animation
       case PetAction.Idle:
@@ -77,11 +79,14 @@ export default function PetInteractions() {
         break;
       // play eating animation
       case PetAction.Eat:
+        actions["CharacterArmature|Bite_Front"]
+          ?.setDuration(0.5)
+          .setLoop(THREE.LoopRepeat, BITE_NUM);
         setCurrentAnimation("CharacterArmature|Bite_Front");
         setTimeout(() => {
           setCurrentAction(PetAction.Idle);
           setCurrentFood(null);
-        }, 2000);
+        }, 500 * BITE_NUM);
         break;
       // play sleeping animation
       case PetAction.Sleep:
@@ -139,6 +144,11 @@ export default function PetInteractions() {
   useFrame((_, delta) => {
     if (!petRef.current) return;
 
+    if (currentAction == PetAction.Sleep) {
+      sleep(delta * 10);
+    }
+
+    // if pet is not supposed to be moving then return
     if (isFreeze) return;
 
     delta = Math.min(delta, 0.1); // Prevent large jumps

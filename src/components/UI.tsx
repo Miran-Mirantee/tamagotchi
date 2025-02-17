@@ -32,6 +32,7 @@ const UI = () => {
   const setBaseModelPath = useTamagotchiStore(
     (state) => state.setBaseModelPath
   );
+  const reset = useTamagotchiStore((state) => state.reset);
   const exitFocusMode = useCameraStore((state) => state.exitFocusMode);
   const uiContainerRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);
@@ -63,7 +64,7 @@ const UI = () => {
         <span>{label} </span>
         <progress value={value} max={maxValue} />
         <span>
-          {value} / {maxValue}
+          {Math.round(value)} / {maxValue}
         </span>
       </div>
     );
@@ -73,6 +74,11 @@ const UI = () => {
     setIsBrowsingFood(false);
     exitFocusMode();
     setIsFreeze(false);
+  };
+
+  const onWakeUpClick = () => {
+    if (currentAction != PetAction.Sleep) return;
+    setCurrentAction(PetAction.WakeUp);
   };
 
   const FoodItem = ({ food }: { food: Food }) => {
@@ -177,14 +183,7 @@ const UI = () => {
         >
           Unfreeze
         </button>
-        <button
-          onClick={() => {
-            if (currentAction != PetAction.Sleep) return;
-            setCurrentAction(PetAction.WakeUp);
-          }}
-        >
-          Wake up
-        </button>
+        <button onClick={() => reset()}>Reset needs</button>
       </div>
 
       {isBrowsingFood && (
@@ -200,6 +199,14 @@ const UI = () => {
             disabled={currentAction == PetAction.Eat}
           >
             Stop feeding
+          </button>
+        </div>
+      )}
+
+      {currentAction == PetAction.Sleep && (
+        <div className="sleep-ui">
+          <button className="wake-up-btn" onClick={onWakeUpClick}>
+            Wake up
           </button>
         </div>
       )}

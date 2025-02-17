@@ -63,7 +63,8 @@ body,
   pointer-events: all;
 }
 
-.food-ui {
+.food-ui,
+.sleep-ui {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -111,4 +112,21 @@ body,
   font-size: 18px;
   user-select: none;
   pointer-events: all;
+}
+
+.food-back-btn:hover {
+  cursor: pointer;
+}
+
+.wake-up-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  font-size: 18px;
+  user-select: none;
+  pointer-events: all;
+}
+
+.wake-up-btn:hover {
+  cursor: pointer;
 }
