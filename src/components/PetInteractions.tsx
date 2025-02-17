@@ -14,6 +14,7 @@ const BITE_NUM = 5;
 
 export default function PetInteractions() {
   const baseModelPath = useTamagotchiStore((state) => state.baseModelPath);
+  const currentFood = useTamagotchiStore((state) => state.currentFood);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
   const setMoveToLocation = useTamagotchiStore(
     (state) => state.setMoveToLocation
@@ -28,6 +29,7 @@ export default function PetInteractions() {
   const useToilet = useTamagotchiStore((state) => state.useToilet);
   const bath = useTamagotchiStore((state) => state.bath);
   const sleep = useTamagotchiStore((state) => state.sleep);
+  const feed = useTamagotchiStore((state) => state.feed);
   const [currentAnimation, setCurrentAnimation] = useState<ActionName>(
     "CharacterArmature|Idle"
   );
@@ -79,13 +81,21 @@ export default function PetInteractions() {
         break;
       // play eating animation
       case PetAction.Eat:
+        if (!currentFood) return;
         actions["CharacterArmature|Bite_Front"]
           ?.setDuration(0.5)
           .setLoop(THREE.LoopRepeat, BITE_NUM);
         setCurrentAnimation("CharacterArmature|Bite_Front");
+        const eatingInterval = setInterval(() => {
+          const hunger = currentFood.hunger / BITE_NUM;
+          const energy = currentFood.energy / BITE_NUM;
+          const happiness = currentFood.happiness / BITE_NUM;
+          feed(hunger, energy, happiness);
+        }, 500);
         setTimeout(() => {
           setCurrentAction(PetAction.Idle);
           setCurrentFood(null);
+          clearInterval(eatingInterval);
         }, 500 * BITE_NUM);
         break;
       // play sleeping animation
@@ -137,7 +147,7 @@ export default function PetInteractions() {
   }, [currentAction]);
 
   useEffect(() => {
-    console.log("isFreeze", isFreeze);
+    // console.log("isFreeze", isFreeze);
   }, [isFreeze]);
 
   // Move the pet towards the target point

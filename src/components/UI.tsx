@@ -22,7 +22,6 @@ const UI = () => {
   const maxHappiness = useTamagotchiStore((state) => state.maxHappiness);
   const maxBladder = useTamagotchiStore((state) => state.maxBladder);
   const maxHygiene = useTamagotchiStore((state) => state.maxHygiene);
-  const feed = useTamagotchiStore((state) => state.feed);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
   const currentAction = useTamagotchiStore((state) => state.currentAction);
   const setCurrentAction = useTamagotchiStore(
@@ -89,7 +88,7 @@ const UI = () => {
         onClick={() => {
           if (currentAction != PetAction.Eat) {
             setCurrentFood(food);
-            feed();
+            setCurrentAction(PetAction.Eat);
           }
         }}
       >

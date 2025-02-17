@@ -39,7 +39,7 @@ type TamagotchiState = {
   moveToLocation: (targetPosition: Vector3, targetRotation: Vector3) => void;
   setBaseModelPath: (baseModelPath: string) => void;
   setCurrentFood: (food: Food | null) => void;
-  feed: () => void;
+  feed: (hunger: number, energy: number, happiness: number) => void;
   setMoveToLocation: (
     moveToLocation: TamagotchiState["moveToLocation"]
   ) => void;
@@ -73,26 +73,13 @@ const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
   moveToLocation: () => {},
   setBaseModelPath: (baseModelPath: string) => set(() => ({ baseModelPath })),
   setCurrentFood: (currentFood) => set(() => ({ currentFood })),
-  feed: () =>
+  feed: (hunger, energy, happiness) =>
     set((state) => {
-      if (state.currentAction != PetAction.Eat && state.currentFood) {
-        return {
-          hunger: Math.min(
-            state.hunger + state.currentFood.hunger,
-            state.maxHunger
-          ),
-          energy: Math.min(
-            state.energy + state.currentFood.energy,
-            state.maxEnergy
-          ),
-          happiness: Math.min(
-            state.happiness + state.currentFood.happiness,
-            state.maxHappiness
-          ),
-          currentAction: PetAction.Eat,
-        };
-      }
-      return {};
+      return {
+        hunger: Math.min(state.hunger + hunger, state.maxHunger),
+        energy: Math.min(state.energy + energy, state.maxEnergy),
+        happiness: Math.min(state.happiness + happiness, state.maxHappiness),
+      };
     }),
   setMoveToLocation: (moveToLocation) => set(() => ({ moveToLocation })),
   setIsFreeze: (isFreeze) => set(() => ({ isFreeze })),
