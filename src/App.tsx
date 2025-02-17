@@ -14,7 +14,6 @@ import UI from "./components/UI";
  * - improve inside of tamagotchi scene
  * - improve bath system (add water shader)
  * - add highlight over clickable objects (post-processing and shader?)
- * - gradually increasing need stats when doing activities (especially sleeping)
  * - improve shadow
  * - improve camera movement
  * - add penalty from not satifying the need

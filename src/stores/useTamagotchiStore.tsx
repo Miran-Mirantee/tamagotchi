@@ -48,8 +48,8 @@ type TamagotchiState = {
   setAnimationActions: (
     animationActions: TamagotchiState["animationActions"]
   ) => void;
-  useToilet: () => void;
-  bath: () => void;
+  useToilet: (increase: number) => void;
+  bath: (increase: number) => void;
   sleep: (increase: number) => void;
   reset: () => void;
 };
@@ -89,13 +89,13 @@ const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
     set(() => ({ currentAction }));
   },
   setAnimationActions: (animationActions) => set(() => ({ animationActions })),
-  useToilet: () =>
+  useToilet: (increase) =>
     set((state) => ({
-      bladder: Math.min(state.bladder + 50, state.maxBladder),
+      bladder: Math.min(state.bladder + increase, state.maxBladder),
     })),
-  bath: () =>
+  bath: (increase) =>
     set((state) => ({
-      hygiene: Math.min(state.hygiene + 50, state.maxHygiene),
+      hygiene: Math.min(state.hygiene + increase, state.maxHygiene),
     })),
   sleep: (increase) =>
     set((state) => ({

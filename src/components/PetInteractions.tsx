@@ -11,6 +11,8 @@ const WANDER_SPEED = 2;
 const ROTATION_SPEED = 0.1;
 const MODEL_WIDTH = 1.5;
 const BITE_NUM = 5;
+const TOILET_DURATION = 2.5;
+const BATH_DURATION = 2.5;
 
 export default function PetInteractions() {
   const baseModelPath = useTamagotchiStore((state) => state.baseModelPath);
@@ -30,6 +32,8 @@ export default function PetInteractions() {
   const bath = useTamagotchiStore((state) => state.bath);
   const sleep = useTamagotchiStore((state) => state.sleep);
   const feed = useTamagotchiStore((state) => state.feed);
+  const maxBladder = useTamagotchiStore((state) => state.maxBladder);
+  const maxHygiene = useTamagotchiStore((state) => state.maxHygiene);
   const [currentAnimation, setCurrentAnimation] = useState<ActionName>(
     "CharacterArmature|Idle"
   );
@@ -120,7 +124,6 @@ export default function PetInteractions() {
       // play dance animation when using toilet
       case PetAction.Toilet:
         setCurrentAnimation("CharacterArmature|Dance");
-        useToilet();
         setTimeout(() => {
           moveToLocation(
             new THREE.Vector3(-0.94, 0, 1.12),
@@ -128,12 +131,11 @@ export default function PetInteractions() {
           );
           setCurrentAction(PetAction.Idle);
           setIsFreeze(false);
-        }, 2500);
+        }, 1000 * TOILET_DURATION);
         break;
       // play dance animation when taking a bath
       case PetAction.Bath:
         setCurrentAnimation("CharacterArmature|Dance");
-        bath();
         setTimeout(() => {
           moveToLocation(
             new THREE.Vector3(-0.94, 0, 1.12),
@@ -141,7 +143,7 @@ export default function PetInteractions() {
           );
           setCurrentAction(PetAction.Idle);
           setIsFreeze(false);
-        }, 2500);
+        }, 1000 * BATH_DURATION);
         break;
     }
   }, [currentAction]);
@@ -156,6 +158,12 @@ export default function PetInteractions() {
 
     if (currentAction == PetAction.Sleep) {
       sleep(delta * 10);
+    }
+    if (currentAction == PetAction.Toilet) {
+      useToilet(delta * (maxBladder / TOILET_DURATION));
+    }
+    if (currentAction == PetAction.Bath) {
+      bath(delta * (maxBladder / TOILET_DURATION));
     }
 
     // if pet is not supposed to be moving then return
