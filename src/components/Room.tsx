@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { CameraControls, useCursor } from "@react-three/drei";
+import { useEffect, useRef, useState } from "react";
 import { useControls } from "leva";
 import Table from "./furniture/Table";
 import Toilet from "./furniture/Toilet";
@@ -9,8 +10,8 @@ import Bed from "./furniture/Bed";
 import Plate from "./furniture/Plate";
 import useTamagotchiStore, { PetAction } from "../stores/useTamagotchiStore";
 import useUIStore from "../stores/useUIStore";
-import { CameraControls } from "@react-three/drei";
 import useCameraStore from "../stores/useCameraStore";
+import useObjectStore from "../stores/useObjectStore";
 import { enterFocusMode, exitFocusMode } from "../Utils/cameraController";
 
 const Walls = () => {
@@ -23,13 +24,14 @@ const Walls = () => {
       {/* Floor */}
       <mesh rotation={[Math.PI * -0.5, 0, 0]} receiveShadow>
         <planeGeometry args={[10, 10]} />
-        <meshStandardMaterial color="rgba(44,37,67,1)" />
+        <meshStandardMaterial color="rgba(44,37,67,1)" depthWrite={false} />
       </mesh>
       {/* Outer walls */}
       <mesh position={[0, 2, -5]}>
         <planeGeometry args={[10, 4]} />
         <meshStandardMaterial
           color="rgba(44,37,67,1)"
+          depthWrite={false}
           //   side={THREE.DoubleSide}
         />
       </mesh>
@@ -37,6 +39,7 @@ const Walls = () => {
         <planeGeometry args={[10, 4]} />
         <meshStandardMaterial
           color="rgba(44,37,67,1)"
+          depthWrite={false}
           //   side={THREE.DoubleSide}
         />
       </mesh>
@@ -44,6 +47,7 @@ const Walls = () => {
         <planeGeometry args={[10, 4]} />
         <meshStandardMaterial
           color="rgba(44,37,67,1)"
+          depthWrite={false}
           //   side={THREE.DoubleSide}
         />
       </mesh>
@@ -72,9 +76,6 @@ const Walls = () => {
 };
 
 export default function Room() {
-  const c = useControls({
-    f: { value: { x: 0, y: 0, z: 0 }, min: -5, max: 5, step: 0.01 },
-  });
   const bedRef = useRef<THREE.Group | null>(null);
   const setIsBrowsingFood = useUIStore((state) => state.setIsBrowsingFood);
   const moveToLocation = useTamagotchiStore((state) => state.moveToLocation);
@@ -85,8 +86,25 @@ export default function Room() {
   const isFreeze = useTamagotchiStore((state) => state.isFreeze);
   const setExitFocusMode = useCameraStore((state) => state.setExitFocusMode);
   const setEnterFocusMode = useCameraStore((state) => state.setEnterFocusMode);
+  const setCurrentObject = useObjectStore((state) => state.setCurrentObject);
+  const setOutlineColor = useObjectStore((state) => state.setOutlineColor);
+  const outlineColor = useObjectStore((state) => state.outlineColor);
+
+  const c = useControls({
+    f: { value: { x: 0, y: 0, z: 0 }, min: -5, max: 5, step: 0.01 },
+    outlineColor: {
+      value: outlineColor,
+      onChange: (color) => {
+        setOutlineColor(color);
+      },
+    },
+  });
 
   const { controls }: { controls: CameraControls } = useThree();
+
+  const [hovered, setHovered] = useState(false);
+
+  useCursor(hovered);
 
   useEffect(() => {
     let size = new THREE.Vector3();
@@ -130,6 +148,14 @@ export default function Room() {
       <Table ref={bedRef} position={[3.2, 0, 3.2]} scale={[1, 0.4, 1]} />
       <Plate
         position={[3.2, 0.46, 2.83]}
+        onPointerOver={(e) => {
+          setHovered(true);
+          if (e.object.name) setCurrentObject(e.object as THREE.Mesh);
+        }}
+        onPointerOut={() => {
+          setCurrentObject(null);
+          setHovered(false);
+        }}
         onPointerDown={(e) => {
           e.stopPropagation();
 
@@ -141,6 +167,14 @@ export default function Room() {
       />
       <Toilet
         position={[-1.15, 0, -4.09]}
+        onPointerOver={(e) => {
+          setHovered(true);
+          if (e.object.name) setCurrentObject(e.object as THREE.Mesh);
+        }}
+        onPointerOut={() => {
+          setCurrentObject(null);
+          setHovered(false);
+        }}
         onPointerDown={(e) => {
           e.stopPropagation();
           if (!isFreeze) {
@@ -151,6 +185,15 @@ export default function Room() {
       <Bathtub
         position={[-3.85, 0, -2.86]}
         scale={[1.4, 1.2, 1]}
+        onPointerOver={(e) => {
+          setHovered(true);
+          if (e.object.parent?.name)
+            setCurrentObject(e.object.parent as THREE.Mesh);
+        }}
+        onPointerOut={() => {
+          setCurrentObject(null);
+          setHovered(false);
+        }}
         onPointerDown={(e) => {
           e.stopPropagation();
           if (!isFreeze) {
@@ -164,6 +207,15 @@ export default function Room() {
       />
       <Bed
         position={[3.9, 0, -3.0]}
+        onPointerOver={(e) => {
+          setHovered(true);
+          if (e.object.parent?.name)
+            setCurrentObject(e.object.parent as THREE.Mesh);
+        }}
+        onPointerOut={() => {
+          setCurrentObject(null);
+          setHovered(false);
+        }}
         onPointerDown={(e) => {
           e.stopPropagation();
           if (!isFreeze) {

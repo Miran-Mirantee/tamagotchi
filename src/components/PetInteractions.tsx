@@ -163,7 +163,7 @@ export default function PetInteractions() {
       useToilet(delta * (maxBladder / TOILET_DURATION));
     }
     if (currentAction == PetAction.Bath) {
-      bath(delta * (maxBladder / TOILET_DURATION));
+      bath(delta * (maxHygiene / TOILET_DURATION));
     }
 
     // if pet is not supposed to be moving then return
