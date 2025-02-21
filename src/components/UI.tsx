@@ -6,22 +6,13 @@ import useTamagotchiStore, {
   PetAction,
 } from "../stores/useTamagotchiStore";
 import food from "../json/food.json";
+import Needs from "./Needs";
 
-const UI = () => {
+export default function UI() {
   const back = useUIStore((state) => state.back);
   const isInside = useUIStore((state) => state.isInside);
   const isBrowsingFood = useUIStore((state) => state.isBrowsingFood);
   const setIsBrowsingFood = useUIStore((state) => state.setIsBrowsingFood);
-  const hunger = useTamagotchiStore((state) => state.hunger);
-  const energy = useTamagotchiStore((state) => state.energy);
-  const happiness = useTamagotchiStore((state) => state.happiness);
-  const bladder = useTamagotchiStore((state) => state.bladder);
-  const hygiene = useTamagotchiStore((state) => state.hygiene);
-  const maxHunger = useTamagotchiStore((state) => state.maxHunger);
-  const maxEnergy = useTamagotchiStore((state) => state.maxEnergy);
-  const maxHappiness = useTamagotchiStore((state) => state.maxHappiness);
-  const maxBladder = useTamagotchiStore((state) => state.maxBladder);
-  const maxHygiene = useTamagotchiStore((state) => state.maxHygiene);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
   const currentAction = useTamagotchiStore((state) => state.currentAction);
   const setCurrentAction = useTamagotchiStore(
@@ -35,39 +26,39 @@ const UI = () => {
   const exitFocusMode = useCameraStore((state) => state.exitFocusMode);
   const uiContainerRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);
-  const statusRef = useRef<HTMLDivElement>(null);
+  // const statusRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isInside) {
       uiContainerRef.current!.style.opacity = "1";
       backBtnRef.current!.style.pointerEvents = "all";
-      statusRef.current!.style.pointerEvents = "all";
+      // statusRef.current!.style.pointerEvents = "all";
     } else {
       uiContainerRef.current!.style.opacity = "0";
       backBtnRef.current!.style.pointerEvents = "none";
-      statusRef.current!.style.pointerEvents = "none";
+      // statusRef.current!.style.pointerEvents = "none";
     }
   }, [isInside]);
 
-  const Need = ({
-    label,
-    value,
-    maxValue,
-  }: {
-    label: string;
-    value: number;
-    maxValue: number;
-  }) => {
-    return (
-      <div className="need">
-        <span>{label} </span>
-        <progress value={value} max={maxValue} />
-        <span>
-          {Math.round(value)} / {maxValue}
-        </span>
-      </div>
-    );
-  };
+  // const Need = ({
+  //   label,
+  //   value,
+  //   maxValue,
+  // }: {
+  //   label: string;
+  //   value: number;
+  //   maxValue: number;
+  // }) => {
+  //   return (
+  //     <div className="need">
+  //       <span>{label} </span>
+  //       <progress value={value} max={maxValue} />
+  //       <span>
+  //         {Math.round(value)} / {maxValue}
+  //       </span>
+  //     </div>
+  //   );
+  // };
 
   const onStopFeedingClick = () => {
     setIsBrowsingFood(false);
@@ -104,13 +95,14 @@ const UI = () => {
           Go back
         </button>
       )}
-      <div className="status" ref={statusRef}>
+      <Needs />
+      {/* <div className="status" ref={statusRef}>
         <Need label={"Hunger:"} value={hunger} maxValue={maxHunger} />
         <Need label={"Energy:"} value={energy} maxValue={maxEnergy} />
         <Need label={"Happiness:"} value={happiness} maxValue={maxHappiness} />
         <Need label={"Bladder:"} value={bladder} maxValue={maxBladder} />
         <Need label={"Hygiene:"} value={hygiene} maxValue={maxHygiene} />
-      </div>
+      </div> */}
       <div className="debug">
         <button
           onClick={() => {
@@ -211,6 +203,4 @@ const UI = () => {
       )}
     </div>
   );
-};
-
-export default UI;
+}

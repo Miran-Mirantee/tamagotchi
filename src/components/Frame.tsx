@@ -51,7 +51,7 @@ const Frame = ({ width = 2, height = 2, children, ...props }: FrameProps) => {
     zoomTransition(
       frame.current!,
       controls,
-      { x: 0, y: 2, z: 3 },
+      { x: 0, y: 0, z: 5 },
       { x: 0, y: 0, z: 0 }
     );
     setIsInside(false);
@@ -65,7 +65,7 @@ const Frame = ({ width = 2, height = 2, children, ...props }: FrameProps) => {
     zoomTransition(
       frame.current!,
       controls,
-      { x: 0, y: 0.45, z: 2.735 },
+      { x: 0, y: 6, z: 10 },
       { x: 0, y: -0.5, z: 0 }
     );
     setIsInside(true);

@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect, useRef } from "react";
+import { Suspense, useState, useEffect, useRef, forwardRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import useTamagotchiStore, { PetAction } from "../stores/useTamagotchiStore";
@@ -14,7 +14,13 @@ const BITE_NUM = 5;
 const TOILET_DURATION = 2.5;
 const BATH_DURATION = 2.5;
 
-export default function PetInteractions() {
+type PetInteractionsProps = {
+  petRefToParent: React.MutableRefObject<THREE.Group | null>; // This is the ref that you will pass to the parent
+};
+
+const PetInteractions: React.FC<PetInteractionsProps> = ({
+  petRefToParent,
+}) => {
   const baseModelPath = useTamagotchiStore((state) => state.baseModelPath);
   const currentFood = useTamagotchiStore((state) => state.currentFood);
   const setCurrentFood = useTamagotchiStore((state) => state.setCurrentFood);
@@ -56,6 +62,11 @@ export default function PetInteractions() {
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
+
+  // Assign the forwarded ref to the internal ref
+  useEffect(() => {
+    petRefToParent.current = petRef.current;
+  }, [petRefToParent]);
 
   useEffect(() => {
     if (baseModelPath.includes("Alien")) {
@@ -152,10 +163,9 @@ export default function PetInteractions() {
     // console.log("isFreeze", isFreeze);
   }, [isFreeze]);
 
-  // Move the pet towards the target point
+  // Gradually increase need stats
   useFrame((_, delta) => {
-    if (!petRef.current) return;
-
+    if (!isFreeze) return;
     if (currentAction == PetAction.Sleep) {
       sleep(delta * 10);
     }
@@ -165,6 +175,11 @@ export default function PetInteractions() {
     if (currentAction == PetAction.Bath) {
       bath(delta * (maxHygiene / TOILET_DURATION));
     }
+  });
+
+  // Move the pet towards the target point
+  useFrame((_, delta) => {
+    if (!petRef.current) return;
 
     // if pet is not supposed to be moving then return
     if (isFreeze) return;
@@ -319,4 +334,6 @@ export default function PetInteractions() {
       )}
     </>
   );
-}
+};
+
+export default PetInteractions;

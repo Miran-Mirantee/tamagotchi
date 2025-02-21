@@ -11,9 +11,7 @@ import UI from "./components/UI";
  * - add activities to do with pet
  * - improve outside of tamagotchi scene
  * - add tamagotchi model (probably have to model myself, wish me luck)
- * - improve inside of tamagotchi scene
  * - improve bath system (add water shader)
- * - add highlight over clickable objects (post-processing and shader?)
  * - improve shadow
  * - improve camera movement
  * - add penalty from not satifying the need
