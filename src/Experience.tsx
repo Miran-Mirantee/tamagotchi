@@ -5,6 +5,7 @@ import { useThree, useFrame } from "@react-three/fiber";
 import Frame from "./components/Frame";
 import PetInteractions from "./components/PetInteractions";
 import Room from "./components/Room";
+import Tamagotchi from "./components/Tamagotchi";
 
 export default function Experience() {
   const petRef = useRef<THREE.Group | null>(null);
@@ -21,17 +22,19 @@ export default function Experience() {
     <>
       <Environment preset="apartment" />
       <color args={["rgba(162,143,79,1)"]} attach={"background"} />
-      <mesh position={[0, 1, 0.74]}>
+      {/* <mesh position={[0, 1, 0.74]}>
         <boxGeometry args={[2.5, 2.5, 0.5]} />
         <meshStandardMaterial />
-      </mesh>
-      <Frame position={[0, 1, 1]}>
+      </mesh> */}
+      <Tamagotchi>
         <ambientLight />
         <directionalLight intensity={2.5} position={[0, 4, 2]} castShadow />
         <color args={["rgba(71,86,59,1)"]} attach={"background"} />
         <PetInteractions petRefToParent={petRef} />
         <Room />
-      </Frame>
+      </Tamagotchi>
+      {/* <Frame position={[0, 1, 1]}>
+      </Frame> */}
 
       <CameraControls
         makeDefault

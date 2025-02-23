@@ -5,16 +5,17 @@ import UI from "./components/UI";
 
 /**
  * TODO:
- * - add model customization feature (changing color of material)
  * - save data in localStorage
  * - use shader to imitate bitting effect on food
  * - add activities to do with pet
  * - improve outside of tamagotchi scene
- * - add tamagotchi model (probably have to model myself, wish me luck)
  * - improve bath system (add water shader)
  * - improve shadow
+ * - improve lighting
  * - improve camera movement
  * - add penalty from not satifying the need
+ * - improve model changing system
+ * - (optional) add model customization feature (changing color of material)
  * - (optional) add house customization feature
  * - (optional) add cooking feature
  * - (optional) add tamagotchi customization feature
@@ -31,7 +32,7 @@ export default function App() {
     <>
       <Canvas
         camera={{
-          position: [0, 3, 4],
+          position: [0, 0, 8],
           fov: 45,
           near: 0.1,
           far: 200,
