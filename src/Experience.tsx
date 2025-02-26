@@ -7,6 +7,7 @@ import Room from "./components/Room";
 import Tamagotchi from "./components/Tamagotchi";
 import { useControls } from "leva";
 import useCameraStore from "./stores/useCameraStore";
+import useUIStore from "./stores/useUIStore";
 
 export default function Experience() {
   const petRef = useRef<THREE.Group | null>(null);
@@ -14,6 +15,7 @@ export default function Experience() {
   const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
     useThree();
   const positionOffset = useCameraStore((state) => state.positionOffset);
+  const isInside = useUIStore((state) => state.isInside);
 
   useFrame(() => {
     if (petRef.current) {
@@ -28,7 +30,6 @@ export default function Experience() {
       target.position.set(positionOffset.x, positionOffset.y, positionOffset.z);
       scene.add(target);
       dirLightRef.current.target = target;
-      console.log(dirLightRef.current);
     }
   }, [dirLightRef.current]);
 

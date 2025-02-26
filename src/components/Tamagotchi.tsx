@@ -107,16 +107,20 @@ export default function Tamagotchi({
             receiveShadow
             geometry={nodes.Plane.geometry}
             //   material={materials.screen}
-            onDoubleClick={(e) => {
+            onPointerDown={(e) => {
+              e.stopPropagation();
+            }}
+            onDoubleClick={() => {
               if (!isInside) {
                 enter();
-                e.stopPropagation();
               }
             }}
-            onPointerOver={() => {
+            onPointerOver={(e) => {
+              e.stopPropagation();
               if (!isInside) hover(true);
             }}
-            onPointerOut={() => {
+            onPointerOut={(e) => {
+              e.stopPropagation();
               if (!isInside) hover(false);
             }}
           >

@@ -11,7 +11,6 @@ import UI from "./components/UI";
  * - improve lighting
  * - add penalty from not satifying the need
  * - improve model changing system
- * - increase thickness of the wall??
  * - add sound
  * - (optional) add model customization feature (changing color of material)
  * - (optional) add house customization feature
@@ -25,8 +24,6 @@ import UI from "./components/UI";
 
 /**
  * BUGS:
- * - fix shadow artifact
- * - disable any action in the tamagotchi if the user is outside
  */
 
 export default function App() {

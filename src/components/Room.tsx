@@ -58,8 +58,9 @@ type GLTFResult = GLTF & {
     Carpet_Round_2: THREE.Mesh;
     floor: THREE.Mesh;
     toilet_floor: THREE.Mesh;
-    toilet_wall: THREE.Mesh;
-    wall: THREE.Mesh;
+    toilet_wall001: THREE.Mesh;
+    Cube006: THREE.Mesh;
+    Cube006_1: THREE.Mesh;
     fishingRod_hanger001: THREE.Mesh;
     FishingRod_Lvl3_1: THREE.Mesh;
     FishingRod_Lvl3_2: THREE.Mesh;
@@ -105,8 +106,9 @@ type GLTFResult = GLTF & {
     ["DarkRed.004"]: THREE.MeshStandardMaterial;
     floor: THREE.MeshStandardMaterial;
     toilet_floor: THREE.MeshStandardMaterial;
-    toilet_wall: THREE.MeshStandardMaterial;
-    wall: THREE.MeshStandardMaterial;
+    ["toilet_wall.001"]: THREE.MeshStandardMaterial;
+    ["wall.001"]: THREE.MeshStandardMaterial;
+    ButtomPlate: THREE.MeshStandardMaterial;
     wood: THREE.MeshStandardMaterial;
     ["Metal.001"]: THREE.MeshStandardMaterial;
     ["Black.006"]: THREE.MeshStandardMaterial;
@@ -453,88 +455,66 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
           material={materials["LightMetal.002"]}
         />
       </group>
-      <group
-        name="Drawer_5"
-        position={[-3.59, 0, 0.575]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      >
+      <group position={[-3.492, 0, 0.673]} rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
-          name="Drawer_5_1"
           castShadow
           receiveShadow
           geometry={nodes.Drawer_5_1.geometry}
           material={materials["Wood.004"]}
         />
         <mesh
-          name="Drawer_5_2"
           castShadow
           receiveShadow
           geometry={nodes.Drawer_5_2.geometry}
           material={materials.Wood_Light}
         />
         <mesh
-          name="Drawer_5_3"
           castShadow
           receiveShadow
           geometry={nodes.Drawer_5_3.geometry}
           material={materials.Wood_Dark}
         />
       </group>
-      <group
-        name="Houseplant_2"
-        position={[-3.832, 1.339, 0.535]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      >
+      <group position={[-3.734, 1.339, 0.634]} rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
-          name="Houseplant_2001"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_2001.geometry}
           material={materials["Black.003"]}
         />
         <mesh
-          name="Houseplant_2001_1"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_2001_1.geometry}
           material={materials["Brown.009"]}
         />
         <mesh
-          name="Houseplant_2001_2"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_2001_2.geometry}
           material={materials["DarkGreen.003"]}
         />
         <mesh
-          name="Houseplant_2001_3"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_2001_3.geometry}
           material={materials["LightOrange.002"]}
         />
       </group>
-      <group
-        name="Houseplant_4"
-        position={[-3.498, 1.34, 0.301]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      >
+      <group position={[-3.4, 1.34, 0.4]} rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
-          name="Houseplant_4_1"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_4_1.geometry}
           material={materials["Black.001"]}
         />
         <mesh
-          name="Houseplant_4_2"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_4_2.geometry}
           material={materials["Brown.007"]}
         />
         <mesh
-          name="Houseplant_4_3"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_4_3.geometry}
@@ -542,26 +522,22 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
         />
       </group>
       <group
-        name="Houseplant_7"
-        position={[-4.354, 1.339, 0.534]}
+        position={[-4.256, 1.339, 0.633]}
         rotation={[-Math.PI / 2, 0, -0.758]}
       >
         <mesh
-          name="Houseplant_7_1"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_7_1.geometry}
           material={materials.Black}
         />
         <mesh
-          name="Houseplant_7_2"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_7_2.geometry}
           material={materials["Brown.001"]}
         />
         <mesh
-          name="Houseplant_7_3"
           castShadow
           receiveShadow
           geometry={nodes.Houseplant_7_3.geometry}
@@ -608,21 +584,29 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
         position={[-2.5, 2.5, -2.5]}
       />
       <mesh
-        name="toilet_wall"
+        name="toilet_wall001"
         castShadow
         receiveShadow
-        geometry={nodes.toilet_wall.geometry}
-        material={materials.toilet_wall}
+        geometry={nodes.toilet_wall001.geometry}
+        material={materials["toilet_wall.001"]}
         position={[-2.5, 2.5, -2.5]}
       />
-      <mesh
-        name="wall"
-        castShadow
-        receiveShadow
-        geometry={nodes.wall.geometry}
-        material={materials.wall}
-        position={[0, 5, 0]}
-      />
+      <group name="wall001" position={[0, 5, 0]}>
+        <mesh
+          name="Cube006"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube006.geometry}
+          material={materials["wall.001"]}
+        />
+        <mesh
+          name="Cube006_1"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube006_1.geometry}
+          material={materials.ButtomPlate}
+        />
+      </group>
       <group name="FishingRods">
         <mesh
           name="fishingRod_hanger001"
