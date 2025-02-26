@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 type CameraState = {
+  positionOffset: { x: number; y: number; z: number };
   enterFocusMode: () => void;
   exitFocusMode: () => void;
   setEnterFocusMode: (enterFocusMode: CameraState["enterFocusMode"]) => void;
@@ -8,6 +9,7 @@ type CameraState = {
 };
 
 const useCameraStore = create<CameraState>((set) => ({
+  positionOffset: { x: 0, y: -2, z: -15 },
   exitFocusMode: () => {
     console.log("exit focus mode");
   },

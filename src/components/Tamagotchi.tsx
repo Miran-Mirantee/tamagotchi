@@ -46,6 +46,7 @@ export default function Tamagotchi({
   const isInside = useUIStore((state) => state.isInside);
   const isBrowsingFood = useUIStore((state) => state.isBrowsingFood);
   const enterFocusMode = useCameraStore((state) => state.enterFocusMode);
+  const positionOffset = useCameraStore((state) => state.positionOffset);
   const { controls }: { controls: CameraControls } = useThree();
 
   useCursor(hovered);
@@ -61,14 +62,6 @@ export default function Tamagotchi({
     }
   }, [isBrowsingFood]);
 
-  useEffect(() => {
-    console.log(frame.current);
-    if (frame.current) {
-      // frame.current.rotation.set(0,0 , 0);
-      // frame.current.position.set(0, -5, 0);
-    }
-  }, [frame]);
-
   const back = () => {
     gsap.to(portal.current, {
       blend: 0,
@@ -77,7 +70,7 @@ export default function Tamagotchi({
     zoomTransition(
       frame.current!,
       controls,
-      { x: 0, y: 0, z: 5 },
+      { x: 0, y: 0, z: 7 },
       { x: 0, y: 0, z: 0 }
     );
     setIsInside(false);
@@ -91,8 +84,9 @@ export default function Tamagotchi({
     zoomTransition(
       frame.current!,
       controls,
-      { x: 0, y: 6, z: 10 },
-      { x: 0, y: -0.5, z: 0 }
+      { x: 0, y: 6 + positionOffset.y, z: 10 + positionOffset.z },
+      { x: 0, y: 0 + positionOffset.y, z: 0 + positionOffset.z }
+      // { x: 0, y: -0.5 + positionOffset.y, z: -3 + positionOffset.z }
     );
     setIsInside(true);
     hover(false);

@@ -96,13 +96,6 @@ export default function UI() {
         </button>
       )}
       <Needs />
-      {/* <div className="status" ref={statusRef}>
-        <Need label={"Hunger:"} value={hunger} maxValue={maxHunger} />
-        <Need label={"Energy:"} value={energy} maxValue={maxEnergy} />
-        <Need label={"Happiness:"} value={happiness} maxValue={maxHappiness} />
-        <Need label={"Bladder:"} value={bladder} maxValue={maxBladder} />
-        <Need label={"Hygiene:"} value={hygiene} maxValue={maxHygiene} />
-      </div> */}
       <div className="debug">
         <button
           onClick={() => {

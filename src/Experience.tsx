@@ -2,14 +2,18 @@ import * as THREE from "three";
 import { useRef, useEffect } from "react";
 import { CameraControls, Environment } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
-import Frame from "./components/Frame";
 import PetInteractions from "./components/PetInteractions";
 import Room from "./components/Room";
 import Tamagotchi from "./components/Tamagotchi";
+import { useControls } from "leva";
+import useCameraStore from "./stores/useCameraStore";
 
 export default function Experience() {
   const petRef = useRef<THREE.Group | null>(null);
-  const { controls }: { controls: CameraControls } = useThree();
+  const dirLightRef = useRef<THREE.DirectionalLight | null>(null);
+  const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
+    useThree();
+  const positionOffset = useCameraStore((state) => state.positionOffset);
 
   useFrame(() => {
     if (petRef.current) {
@@ -18,20 +22,41 @@ export default function Experience() {
     }
   });
 
+  useEffect(() => {
+    if (dirLightRef.current) {
+      const target = new THREE.Object3D();
+      target.position.set(positionOffset.x, positionOffset.y, positionOffset.z);
+      scene.add(target);
+      dirLightRef.current.target = target;
+      console.log(dirLightRef.current);
+    }
+  }, [dirLightRef.current]);
+
+  const c = useControls({
+    coord: { value: { x: 0, y: -2, z: -15 }, min: -30, max: 30 },
+  });
+
   return (
     <>
       <Environment preset="apartment" />
-      <color args={["rgba(162,143,79,1)"]} attach={"background"} />
+      <color args={["rgba(255,247,176,1)"]} attach={"background"} />
       {/* <mesh position={[0, 1, 0.74]}>
         <boxGeometry args={[2.5, 2.5, 0.5]} />
         <meshStandardMaterial />
       </mesh> */}
       <Tamagotchi>
-        <ambientLight />
-        <directionalLight intensity={2.5} position={[0, 4, 2]} castShadow />
         <color args={["rgba(71,86,59,1)"]} attach={"background"} />
-        <PetInteractions petRefToParent={petRef} />
-        <Room />
+        <ambientLight />
+        <group position={[c.coord.x, c.coord.y, c.coord.z]}>
+          <directionalLight
+            ref={dirLightRef}
+            intensity={2.5}
+            position={[0, 4, 2]}
+            castShadow
+          />
+          <PetInteractions petRefToParent={petRef} />
+          <Room />
+        </group>
       </Tamagotchi>
       {/* <Frame position={[0, 1, 1]}>
       </Frame> */}

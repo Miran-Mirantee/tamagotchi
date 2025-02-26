@@ -117,7 +117,7 @@ type GLTFResult = GLTF & {
   };
 };
 
-export default function Room2(props: JSX.IntrinsicElements["group"]) {
+export default function Room(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/models/room.glb") as GLTFResult;
   const setIsBrowsingFood = useUIStore((state) => state.setIsBrowsingFood);
   const moveToLocation = useTamagotchiStore((state) => state.moveToLocation);
@@ -129,6 +129,7 @@ export default function Room2(props: JSX.IntrinsicElements["group"]) {
   const currentFood = useTamagotchiStore((state) => state.currentFood);
   const setExitFocusMode = useCameraStore((state) => state.setExitFocusMode);
   const setEnterFocusMode = useCameraStore((state) => state.setEnterFocusMode);
+  const positionOffset = useCameraStore((state) => state.positionOffset);
   const setCurrentObject = useObjectStore((state) => state.setCurrentObject);
   const setOutlineColor = useObjectStore((state) => state.setOutlineColor);
   const currentObject = useObjectStore((state) => state.currentObject);
@@ -144,14 +145,17 @@ export default function Room2(props: JSX.IntrinsicElements["group"]) {
     setEnterFocusMode(() =>
       enterFocusMode(
         controls,
-        new THREE.Vector3(3.2, 2.46, 5.83),
-        new THREE.Vector3(3.2, 0.46, 2.83)
+        new THREE.Vector3(
+          3.2,
+          2.46 + positionOffset.y,
+          5.83 + positionOffset.z
+        ),
+        new THREE.Vector3(3.2, 0.46 + positionOffset.y, 2.83 + positionOffset.z)
       )
     );
   }, [controls]);
 
-  const c = useControls({
-    f: { value: { x: 0, y: 0, z: 0 }, min: -5, max: 5, step: 0.01 },
+  useControls({
     outlineColor: {
       value: outlineColor,
       onChange: (color) => {

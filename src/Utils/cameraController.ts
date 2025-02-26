@@ -32,7 +32,7 @@ export const enterFocusMode = (
 };
 
 export const exitFocusMode = (controls: CameraControls) => {
-  controls.setLookAt(0, 5, 10, 0, 0, 0, true);
+  controls.setLookAt(0, 6 - 2, 10 - 15, 0, -0.5 - 2, -3 - 15, true);
   controls.dollySpeed = 1;
   controls.truckSpeed = 2;
 };
