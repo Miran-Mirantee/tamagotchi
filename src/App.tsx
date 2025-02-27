@@ -8,8 +8,6 @@ import * as THREE from "three";
  * TODO:
  * - save data in localStorage
  * - improve bath system (add water shader)
- * - improve shadow
- * - improve lighting
  * - add penalty from not satifying the need
  * - improve model changing system
  * - add sound

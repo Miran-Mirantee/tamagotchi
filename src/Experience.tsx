@@ -33,7 +33,7 @@ export default function Experience() {
   const c = useControls({
     coord: { value: { x: 0, y: 0, z: 0 }, min: -10, max: 10 },
     ambientColor: { value: "#d58b8b" },
-    ambientIntensity: { value: 1.5, min: 0, max: 30, step: 0.25 },
+    ambientIntensity: { value: 3.75, min: 0, max: 30, step: 0.25 },
     dirColor: { value: "#fcffba" },
     dirIntensity: { value: 3.75, min: 0, max: 30, step: 0.25 },
     dir2Color: { value: "#c2ffe8" },
@@ -53,47 +53,6 @@ export default function Experience() {
     <>
       <Environment preset="apartment" />
       <color args={["rgba(255,247,176,1)"]} attach={"background"} />
-      {/* <color args={[c.bgColor]} attach={"background"} />
-      <ambientLight intensity={c.ambientIntensity} color={c.ambientColor} />
-      <group position={0}>
-        <pointLight
-          ref={pointLightRef}
-          intensity={c.pointIntensity}
-          color={c.pointColor}
-          position={[-2.5, 5, -2.5]}
-          castShadow
-        />
-        <directionalLight
-          ref={dirLightRef}
-          intensity={c.dirIntensity}
-          color={c.dirColor}
-          position={[6.0, 7.4, 6.2]}
-          castShadow
-          shadow-camera-left={-8}
-          shadow-camera-right={8}
-          shadow-camera-top={10}
-          shadow-camera-bottom={-6}
-          shadow-camera-far={20}
-          shadow-camera-height={1024}
-          shadow-camera-width={1024}
-        />
-        <directionalLight
-          ref={dirLight2Ref}
-          intensity={c.dir2Intensity}
-          color={c.dir2Color}
-          position={[10.0, 3.0, 0]}
-          castShadow
-          shadow-camera-left={-7}
-          shadow-camera-right={7}
-          shadow-camera-top={7}
-          shadow-camera-bottom={-2}
-          shadow-camera-near={4}
-          shadow-camera-far={18}
-          shadow-camera-height={1024}
-          shadow-camera-width={1024}
-        />
-        <Room />
-      </group> */}
 
       <Tamagotchi>
         <color args={[c.bgColor]} attach={"background"} />

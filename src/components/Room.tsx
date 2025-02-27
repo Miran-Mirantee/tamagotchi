@@ -396,7 +396,7 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
       </group>
       <group
         name="Carpet_1"
-        position={[-1.001, 0.007, 0.882]}
+        position={[-1.001, 0.05, 0.882]}
         rotation={[-Math.PI / 2, 0, Math.PI / 2]}
         scale={0.698}
       >
@@ -546,7 +546,7 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
       </group>
       <group
         name="Carpet_Round"
-        position={[3.2, 0.003, 3.2]}
+        position={[3.2, 0.05, 3.2]}
         rotation={[-Math.PI / 2, 0, 0]}
         scale={1.37}
       >
