@@ -2,12 +2,10 @@ import { Canvas } from "@react-three/fiber";
 import { Perf } from "r3f-perf";
 import Experience from "./Experience";
 import UI from "./components/UI";
-import * as THREE from "three";
 
 /**
  * TODO:
  * - save data in localStorage
- * - improve bath system (add water shader)
  * - add penalty from not satifying the need
  * - improve model changing system
  * - add sound

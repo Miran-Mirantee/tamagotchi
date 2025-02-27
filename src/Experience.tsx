@@ -39,8 +39,9 @@ export default function Experience() {
     dir2Color: { value: "#c2ffe8" },
     dir2Intensity: { value: 1.75, min: 0, max: 30, step: 0.25 },
     pointColor: { value: "#fce47b" },
-    pointIntensity: { value: 30.0, min: 0, max: 30, step: 0.25 },
+    pointIntensity: { value: 30.0, min: 0, max: 100, step: 0.25 },
     bgColor: { value: "#d58b8b" },
+    shadowBias: { value: -0.0025, min: -0.01, max: 0.01, step: 0.00001 },
   });
 
   // useShadowHelper(dirLightRef);
@@ -78,8 +79,8 @@ export default function Experience() {
             shadow-camera-top={10}
             shadow-camera-bottom={-6}
             shadow-camera-far={20}
-            shadow-camera-height={1024}
-            shadow-camera-width={1024}
+            shadow-camera-height={1024 * 4}
+            shadow-camera-width={1024 * 4}
           />
           <directionalLight
             ref={dirLight2Ref}
@@ -93,8 +94,8 @@ export default function Experience() {
             shadow-camera-bottom={-2}
             shadow-camera-near={4}
             shadow-camera-far={18}
-            shadow-camera-height={1024}
-            shadow-camera-width={1024}
+            shadow-camera-height={1024 * 4}
+            shadow-camera-width={1024 * 4}
           />
           <PetInteractions petRefToParent={petRef} />
           <Room />
