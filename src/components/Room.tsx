@@ -26,6 +26,7 @@ type GLTFResult = GLTF & {
     Table_RoundSmall: THREE.Mesh;
     Bathroom_Bathtub: THREE.Mesh;
     Bathroom_Bathtub_1: THREE.Mesh;
+    Bathroom_Bathtub_2: THREE.Mesh;
     Toilet: THREE.Mesh;
     Bed_Single: THREE.Mesh;
     Bed_Single_1: THREE.Mesh;
@@ -74,6 +75,7 @@ type GLTFResult = GLTF & {
     ["Wood.002"]: THREE.MeshStandardMaterial;
     ["White.001"]: THREE.MeshStandardMaterial;
     ["Grey.001"]: THREE.MeshStandardMaterial;
+    water: THREE.MeshPhysicalMaterial;
     ["White.002"]: THREE.MeshStandardMaterial;
     White: THREE.MeshStandardMaterial;
     Wood: THREE.MeshStandardMaterial;
@@ -189,7 +191,7 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
         {currentFood && <Food url={currentFood.model} scale={0.5} />}
         <mesh
           name="Plate"
-          castShadow
+          receiveShadow
           geometry={nodes.Plate.geometry}
           material={materials["White.003"]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -225,7 +227,6 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
       <mesh
         name="Table_RoundSmall"
         castShadow
-        receiveShadow
         geometry={nodes.Table_RoundSmall.geometry}
         material={materials["Wood.002"]}
         position={[3.2, 0, 3.2]}
@@ -275,6 +276,11 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
         >
           {currentObject?.name == "Bathtub" && <PresetOutlines />}
         </mesh>
+        <mesh
+          receiveShadow
+          geometry={nodes.Bathroom_Bathtub_2.geometry}
+          material={materials.water}
+        />
       </group>
       <mesh
         name="Toilet"
