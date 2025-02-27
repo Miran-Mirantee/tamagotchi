@@ -283,8 +283,8 @@ const PetInteractions: React.FC<PetInteractionsProps> = ({
     {
       minX: -4.885 - MODEL_WIDTH / 2,
       maxX: -2.1 + MODEL_WIDTH / 2,
-      minZ: -1.35 - MODEL_WIDTH / 2,
-      maxZ: 0 + MODEL_WIDTH / 2,
+      minZ: 0 - MODEL_WIDTH / 2,
+      maxZ: 1.3 + MODEL_WIDTH / 2,
     },
   ];
 
