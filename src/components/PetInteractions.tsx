@@ -280,6 +280,12 @@ const PetInteractions: React.FC<PetInteractionsProps> = ({
       minZ: -5 - MODEL_WIDTH / 2,
       maxZ: 0 + MODEL_WIDTH / 2,
     },
+    {
+      minX: -4.885 - MODEL_WIDTH / 2,
+      maxX: -2.1 + MODEL_WIDTH / 2,
+      minZ: -1.35 - MODEL_WIDTH / 2,
+      maxZ: 0 + MODEL_WIDTH / 2,
+    },
   ];
 
   // Function to check if a point is inside an obstacle

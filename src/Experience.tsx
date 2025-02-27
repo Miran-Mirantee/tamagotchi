@@ -7,7 +7,7 @@ import Room from "./components/Room";
 import Tamagotchi from "./components/Tamagotchi";
 import { useControls } from "leva";
 import useCameraStore from "./stores/useCameraStore";
-import useShadowHelper from "./Utils/UseShadowHelper";
+// import useShadowHelper from "./Utils/UseShadowHelper";
 
 export default function Experience() {
   const petRef = useRef<THREE.Group | null>(null);
