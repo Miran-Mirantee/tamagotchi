@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect, useRef, forwardRef } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import useTamagotchiStore, { PetAction } from "../stores/useTamagotchiStore";

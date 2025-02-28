@@ -8,6 +8,18 @@ import useTamagotchiStore, {
 import food from "../json/food.json";
 import Needs from "./Needs";
 
+const petModels = [
+  "Cat",
+  "Pigeon",
+  "Slime",
+  "Chicken",
+  "Orc",
+  "Alien",
+  "Fish",
+  "Birb",
+  "Mushnub",
+];
+
 export default function UI() {
   const back = useUIStore((state) => state.back);
   const isInside = useUIStore((state) => state.isInside);
@@ -19,6 +31,7 @@ export default function UI() {
     (state) => state.setCurrentAction
   );
   const setIsFreeze = useTamagotchiStore((state) => state.setIsFreeze);
+  const isFreeze = useTamagotchiStore((state) => state.isFreeze);
   const setBaseModelPath = useTamagotchiStore(
     (state) => state.setBaseModelPath
   );
@@ -26,39 +39,24 @@ export default function UI() {
   const exitFocusMode = useCameraStore((state) => state.exitFocusMode);
   const uiContainerRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);
+  const modelMenuBtnRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   // const statusRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isInside) {
       uiContainerRef.current!.style.opacity = "1";
       backBtnRef.current!.style.pointerEvents = "all";
+      modelMenuBtnRef.current!.style.pointerEvents = "all";
       // statusRef.current!.style.pointerEvents = "all";
     } else {
       uiContainerRef.current!.style.opacity = "0";
       backBtnRef.current!.style.pointerEvents = "none";
+      modelMenuBtnRef.current!.style.pointerEvents = "none";
       // statusRef.current!.style.pointerEvents = "none";
     }
   }, [isInside]);
-
-  // const Need = ({
-  //   label,
-  //   value,
-  //   maxValue,
-  // }: {
-  //   label: string;
-  //   value: number;
-  //   maxValue: number;
-  // }) => {
-  //   return (
-  //     <div className="need">
-  //       <span>{label} </span>
-  //       <progress value={value} max={maxValue} />
-  //       <span>
-  //         {Math.round(value)} / {maxValue}
-  //       </span>
-  //     </div>
-  //   );
-  // };
 
   const onStopFeedingClick = () => {
     setIsBrowsingFood(false);
@@ -69,6 +67,20 @@ export default function UI() {
   const onWakeUpClick = () => {
     if (currentAction != PetAction.Sleep) return;
     setCurrentAction(PetAction.WakeUp);
+  };
+
+  const openModalClick = () => {
+    overlayRef.current!.style.opacity = "100";
+    overlayRef.current!.style.pointerEvents = "all";
+    modalRef.current!.style.opacity = "100";
+    modalRef.current!.style.pointerEvents = "all";
+  };
+
+  const closeModalClick = () => {
+    overlayRef.current!.style.opacity = "0";
+    overlayRef.current!.style.pointerEvents = "none";
+    modalRef.current!.style.opacity = "0";
+    modalRef.current!.style.pointerEvents = "none";
   };
 
   const FoodItem = ({ food }: { food: Food }) => {
@@ -88,6 +100,20 @@ export default function UI() {
     );
   };
 
+  const ModelChangeItem = ({ model }: { model: string }) => {
+    return (
+      <button
+        title={model}
+        className="model-change-item"
+        onClick={() => {
+          setBaseModelPath(`./models/pet/${model}.glb`);
+        }}
+      >
+        {model}
+      </button>
+    );
+  };
+
   return (
     <div className="ui-container" ref={uiContainerRef}>
       {!isBrowsingFood && (
@@ -99,69 +125,6 @@ export default function UI() {
       <div className="debug">
         <button
           onClick={() => {
-            setBaseModelPath("./models/pet/Cat.glb");
-          }}
-        >
-          Cat
-        </button>
-        <button
-          onClick={() => {
-            setBaseModelPath("./models/pet/Pigeon.glb");
-          }}
-        >
-          Pigeon
-        </button>
-        <button
-          onClick={() => {
-            setBaseModelPath("./models/pet/Slime.glb");
-          }}
-        >
-          Slime
-        </button>
-        <button
-          onClick={() => {
-            setBaseModelPath("./models/pet/Chicken.glb");
-          }}
-        >
-          Chicken
-        </button>
-        <button
-          onClick={() => {
-            setBaseModelPath("./models/pet/Orc.glb");
-          }}
-        >
-          Orc
-        </button>
-        <button
-          onClick={() => {
-            setBaseModelPath("./models/pet/Alien.glb");
-          }}
-        >
-          Alien
-        </button>
-        <button
-          onClick={() => {
-            setBaseModelPath("./models/pet/Fish.glb");
-          }}
-        >
-          Fish
-        </button>
-        <button
-          onClick={() => {
-            setBaseModelPath("./models/pet/Birb.glb");
-          }}
-        >
-          Birb
-        </button>
-        <button
-          onClick={() => {
-            setBaseModelPath("./models/pet/Mushnub.glb");
-          }}
-        >
-          Mushnub
-        </button>
-        <button
-          onClick={() => {
             setIsFreeze(false);
           }}
         >
@@ -171,7 +134,7 @@ export default function UI() {
       </div>
 
       {isBrowsingFood && (
-        <div className="food-ui">
+        <>
           <div className="food-container">
             {food.map((food: Food, index) => (
               <FoodItem key={index} food={food} />
@@ -184,16 +147,31 @@ export default function UI() {
           >
             Stop feeding
           </button>
-        </div>
+        </>
       )}
 
       {currentAction == PetAction.Sleep && (
-        <div className="sleep-ui">
-          <button className="wake-up-btn" onClick={onWakeUpClick}>
-            Wake up
-          </button>
-        </div>
+        <button className="wake-up-btn" onClick={onWakeUpClick}>
+          Wake up
+        </button>
       )}
+
+      <button
+        ref={modelMenuBtnRef}
+        className="model-menu-btn"
+        onClick={openModalClick}
+        disabled={isFreeze}
+      >
+        change
+      </button>
+
+      <div ref={overlayRef} className="overlay" onClick={closeModalClick} />
+
+      <div ref={modalRef} className="model-modal">
+        {petModels.map((model) => (
+          <ModelChangeItem key={model} model={model} />
+        ))}
+      </div>
     </div>
   );
 }
