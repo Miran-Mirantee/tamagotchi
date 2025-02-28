@@ -52,15 +52,24 @@ type TamagotchiState = {
   bath: (increase: number) => void;
   sleep: (increase: number) => void;
   reset: () => void;
+  hungerCredit: number;
+  energyCredit: number;
+  bladderCredit: number;
+  hygieneCredit: number;
+  calculateHappiness: () => void;
+  decreaseHunger: (decrease: number) => void;
+  decreaseEnergy: (decrease: number) => void;
+  decreaseBladder: (decrease: number) => void;
+  decreaseHygiene: (decrease: number) => void;
 };
 
 const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
   baseModelPath: "./models/pet/Cat.glb",
-  hunger: 0,
-  energy: 0,
-  happiness: 0,
-  bladder: 0,
-  hygiene: 0,
+  hunger: 50,
+  energy: 50,
+  happiness: 50,
+  bladder: 50,
+  hygiene: 50,
   maxHunger: 100,
   maxEnergy: 100,
   maxHappiness: 100,
@@ -108,6 +117,39 @@ const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
       happiness: 0,
       bladder: 0,
       hygiene: 0,
+    })),
+  hungerCredit: 5,
+  energyCredit: 4,
+  bladderCredit: 2,
+  hygieneCredit: 3,
+  calculateHappiness: () =>
+    set((state) => {
+      const happiness =
+        (state.hunger * state.hungerCredit +
+          state.energy * state.energyCredit +
+          state.bladder * state.bladderCredit +
+          state.hygiene * state.hygieneCredit) /
+        (state.hungerCredit +
+          state.energyCredit +
+          state.bladderCredit +
+          state.hygieneCredit);
+      return { happiness: Math.max(happiness, 0) };
+    }),
+  decreaseHunger: (decrease) =>
+    set((state) => ({
+      hunger: Math.max(state.hunger - decrease, 0),
+    })),
+  decreaseEnergy: (decrease) =>
+    set((state) => ({
+      energy: Math.max(state.energy - decrease, 0),
+    })),
+  decreaseBladder: (decrease) =>
+    set((state) => ({
+      bladder: Math.max(state.bladder - decrease, 0),
+    })),
+  decreaseHygiene: (decrease) =>
+    set((state) => ({
+      hygiene: Math.max(state.hygiene - decrease, 0),
     })),
 }));
 

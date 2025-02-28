@@ -34,9 +34,9 @@ export default function Needs() {
 
   return (
     <div className="status">
+      <Need label={"Happiness:"} value={happiness} maxValue={maxHappiness} />
       <Need label={"Hunger:"} value={hunger} maxValue={maxHunger} />
       <Need label={"Energy:"} value={energy} maxValue={maxEnergy} />
-      <Need label={"Happiness:"} value={happiness} maxValue={maxHappiness} />
       <Need label={"Bladder:"} value={bladder} maxValue={maxBladder} />
       <Need label={"Hygiene:"} value={hygiene} maxValue={maxHygiene} />
     </div>

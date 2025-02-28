@@ -40,6 +40,13 @@ const PetInteractions: React.FC<PetInteractionsProps> = ({
   const feed = useTamagotchiStore((state) => state.feed);
   const maxBladder = useTamagotchiStore((state) => state.maxBladder);
   const maxHygiene = useTamagotchiStore((state) => state.maxHygiene);
+  const decreaseHunger = useTamagotchiStore((state) => state.decreaseHunger);
+  const decreaseEnergy = useTamagotchiStore((state) => state.decreaseEnergy);
+  const decreaseHygiene = useTamagotchiStore((state) => state.decreaseHygiene);
+  const decreaseBladder = useTamagotchiStore((state) => state.decreaseBladder);
+  const calculateHappiness = useTamagotchiStore(
+    (state) => state.calculateHappiness
+  );
   const [currentAnimation, setCurrentAnimation] = useState<ActionName>(
     "CharacterArmature|Idle"
   );
@@ -159,10 +166,6 @@ const PetInteractions: React.FC<PetInteractionsProps> = ({
     }
   }, [currentAction]);
 
-  useEffect(() => {
-    // console.log("isFreeze", isFreeze);
-  }, [isFreeze]);
-
   // Gradually increase need stats
   useFrame((_, delta) => {
     if (!isFreeze) return;
@@ -175,6 +178,48 @@ const PetInteractions: React.FC<PetInteractionsProps> = ({
     if (currentAction == PetAction.Bath) {
       bath(delta * (maxHygiene / TOILET_DURATION));
     }
+  });
+
+  // Gradually decrease need stats
+  useFrame((_, delta) => {
+    let decreaseEnergyRate = 1;
+    let decreaseHungerRate = 1;
+    let decreaseHygieneRate = 1;
+    let decreaseBladderRate = 1;
+    switch (currentAction) {
+      case PetAction.Idle:
+        decreaseEnergyRate = 0.25;
+        decreaseHungerRate = 0.5;
+        decreaseHygieneRate = 0.4;
+        decreaseBladderRate = 0.3;
+        break;
+      case PetAction.Walk:
+        decreaseEnergyRate = 5;
+        decreaseHungerRate = 1;
+        decreaseHygieneRate = 2;
+        decreaseBladderRate = 0.3;
+        break;
+      case PetAction.Eat:
+        decreaseBladderRate = 5;
+        break;
+      case PetAction.Sleep:
+        decreaseEnergyRate = 0;
+        break;
+      case PetAction.WakeUp:
+        decreaseEnergyRate = 0;
+        break;
+      case PetAction.Bath:
+        decreaseHygieneRate = 0;
+        break;
+      case PetAction.Toilet:
+        decreaseBladderRate = 0;
+        break;
+    }
+    decreaseEnergy(delta * decreaseEnergyRate);
+    decreaseHunger(delta * decreaseHungerRate);
+    decreaseHygiene(delta * decreaseHygieneRate);
+    decreaseBladder(delta * decreaseBladderRate);
+    calculateHappiness();
   });
 
   // Move the pet towards the target point
