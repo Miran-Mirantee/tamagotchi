@@ -107,9 +107,10 @@ export default function UI() {
         className="model-change-item"
         onClick={() => {
           setBaseModelPath(`./models/pet/${model}.glb`);
+          closeModalClick();
         }}
       >
-        {model}
+        <img src={`./images/pet/${model}.webp`} alt={model} />
       </button>
     );
   };

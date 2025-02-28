@@ -155,8 +155,17 @@ body,
 }
 
 .model-change-item {
-  background-color: cyan;
+  background-color: rgb(26, 18, 75);
   cursor: pointer;
   border-radius: 8px;
   border: 1px solid black;
+}
+
+.model-change-item:hover {
+  background-color: rgb(55, 41, 119);
+}
+
+.model-change-item > img {
+  max-width: 100%;
+  max-height: 100%;
 }

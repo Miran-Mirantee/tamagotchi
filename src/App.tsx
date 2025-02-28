@@ -7,7 +7,6 @@ import UI from "./components/UI";
  * TODO:
  * - save data in localStorage
  * - add penalty from not satifying the need
- * - improve model changing system
  * - add sound
  * - (optional) add model customization feature (changing color of material)
  * - (optional) add house customization feature

@@ -4,7 +4,7 @@
     "hunger": 20,
     "energy": 5,
     "happiness": 5,
-    "thumbnail": "./images/apple-green.webp",
+    "thumbnail": "./images/food/apple-green.webp",
     "model": "./models/food/Apple Green.glb"
   },
   {
@@ -12,7 +12,7 @@
     "hunger": 60,
     "energy": 20,
     "happiness": 15,
-    "thumbnail": "./images/burger.webp",
+    "thumbnail": "./images/food/burger.webp",
     "model": "./models/food/Burger.glb"
   },
   {
@@ -20,7 +20,7 @@
     "hunger": 70,
     "energy": 25,
     "happiness": 20,
-    "thumbnail": "./images/cheeseburger.webp",
+    "thumbnail": "./images/food/cheeseburger.webp",
     "model": "./models/food/Cheeseburger.glb"
   },
   {
@@ -28,7 +28,7 @@
     "hunger": 65,
     "energy": 15,
     "happiness": 10,
-    "thumbnail": "./images/chicken-leg.webp",
+    "thumbnail": "./images/food/chicken-leg.webp",
     "model": "./models/food/Chicken Leg.glb"
   },
   {
@@ -36,7 +36,7 @@
     "hunger": 15,
     "energy": 10,
     "happiness": 30,
-    "thumbnail": "./images/chocolate-bar.webp",
+    "thumbnail": "./images/food/chocolate-bar.webp",
     "model": "./models/food/Chocolate Bar.glb"
   },
   {
@@ -44,7 +44,7 @@
     "hunger": 25,
     "energy": 10,
     "happiness": 15,
-    "thumbnail": "./images/croissant.webp",
+    "thumbnail": "./images/food/croissant.webp",
     "model": "./models/food/Croissant.glb"
   },
   {
@@ -52,7 +52,7 @@
     "hunger": 20,
     "energy": 5,
     "happiness": 25,
-    "thumbnail": "./images/cupcake.webp",
+    "thumbnail": "./images/food/cupcake.webp",
     "model": "./models/food/Cupcake.glb"
   },
   {
@@ -60,7 +60,7 @@
     "hunger": 30,
     "energy": 5,
     "happiness": 20,
-    "thumbnail": "./images/donut.webp",
+    "thumbnail": "./images/food/donut.webp",
     "model": "./models/food/Donut.glb"
   },
   {
@@ -68,7 +68,7 @@
     "hunger": 50,
     "energy": 15,
     "happiness": 10,
-    "thumbnail": "./images/egg-fried.webp",
+    "thumbnail": "./images/food/egg-fried.webp",
     "model": "./models/food/Egg Fried.glb"
   },
   {
@@ -76,7 +76,7 @@
     "hunger": 50,
     "energy": 10,
     "happiness": 15,
-    "thumbnail": "./images/hotdog.webp",
+    "thumbnail": "./images/food/hotdog.webp",
     "model": "./models/food/Hotdog.glb"
   },
   {
@@ -84,7 +84,7 @@
     "hunger": 60,
     "energy": 20,
     "happiness": 25,
-    "thumbnail": "./images/pancakes-stack.webp",
+    "thumbnail": "./images/food/pancakes-stack.webp",
     "model": "./models/food/Pancakes Stack.glb"
   },
   {
@@ -92,7 +92,7 @@
     "hunger": 60,
     "energy": 15,
     "happiness": 20,
-    "thumbnail": "./images/pizza-slice.webp",
+    "thumbnail": "./images/food/pizza-slice.webp",
     "model": "./models/food/Pizza Slice.glb"
   },
   {
@@ -100,7 +100,7 @@
     "hunger": 70,
     "energy": 25,
     "happiness": 15,
-    "thumbnail": "./images/steak.webp",
+    "thumbnail": "./images/food/steak.webp",
     "model": "./models/food/Steak.glb"
   },
   {
@@ -108,7 +108,7 @@
     "hunger": 40,
     "energy": 10,
     "happiness": 20,
-    "thumbnail": "./images/sushi-nigiri.webp",
+    "thumbnail": "./images/food/sushi-nigiri.webp",
     "model": "./models/food/Sushi Nigiri.glb"
   },
   {
@@ -116,7 +116,7 @@
     "hunger": 30,
     "energy": 15,
     "happiness": 25,
-    "thumbnail": "./images/waffle.webp",
+    "thumbnail": "./images/food/waffle.webp",
     "model": "./models/food/Waffle.glb"
   }
 ]
