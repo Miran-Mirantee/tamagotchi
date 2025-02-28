@@ -13,6 +13,7 @@ export default function useShadowHelper(
   React.useEffect(() => {
     if (!ref.current) return;
 
+    // @ts-ignore
     helper.current = new CameraHelper(ref.current?.shadow.camera);
     if (helper.current) {
       scene.add(helper.current);
