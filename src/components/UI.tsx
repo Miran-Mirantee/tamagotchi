@@ -123,7 +123,7 @@ export default function UI() {
         </button>
       )}
       <Needs />
-      <div className="debug">
+      {/* <div className="debug">
         <button
           onClick={() => {
             setIsFreeze(false);
@@ -132,7 +132,7 @@ export default function UI() {
           Unfreeze
         </button>
         <button onClick={() => reset()}>Reset needs</button>
-      </div>
+      </div> */}
 
       {isBrowsingFood && (
         <>
@@ -163,7 +163,7 @@ export default function UI() {
         onClick={openModalClick}
         disabled={isFreeze}
       >
-        change
+        Change model
       </button>
 
       <div ref={overlayRef} className="overlay" onClick={closeModalClick} />

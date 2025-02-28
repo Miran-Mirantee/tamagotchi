@@ -159,14 +159,14 @@ export default function Room(props: JSX.IntrinsicElements["group"]) {
     );
   }, [controls]);
 
-  useControls({
-    outlineColor: {
-      value: outlineColor,
-      onChange: (color) => {
-        setOutlineColor(color);
-      },
-    },
-  });
+  // useControls({
+  //   outlineColor: {
+  //     value: outlineColor,
+  //     onChange: (color) => {
+  //       setOutlineColor(color);
+  //     },
+  //   },
+  // });
 
   const doAction = (
     position: number[],

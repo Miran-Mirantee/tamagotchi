@@ -286,24 +286,24 @@ const PetInteractions: React.FC<PetInteractionsProps> = ({
     };
   }, [currentAnimation]);
 
-  useControls({
-    animations: {
-      options: [
-        "CharacterArmature|Idle",
-        "CharacterArmature|Dance",
-        "CharacterArmature|Bite_Front",
-        "CharacterArmature|Death",
-        "CharacterArmature|HitRecieve",
-        "CharacterArmature|Jump",
-        "CharacterArmature|No",
-        "CharacterArmature|Walk",
-        "CharacterArmature|Yes",
-      ],
-      onChange: (e: ActionName) => {
-        setCurrentAnimation(e);
-      },
-    },
-  });
+  // useControls({
+  //   animations: {
+  //     options: [
+  //       "CharacterArmature|Idle",
+  //       "CharacterArmature|Dance",
+  //       "CharacterArmature|Bite_Front",
+  //       "CharacterArmature|Death",
+  //       "CharacterArmature|HitRecieve",
+  //       "CharacterArmature|Jump",
+  //       "CharacterArmature|No",
+  //       "CharacterArmature|Walk",
+  //       "CharacterArmature|Yes",
+  //     ],
+  //     onChange: (e: ActionName) => {
+  //       setCurrentAnimation(e);
+  //     },
+  //   },
+  // });
 
   // Define obstacles with padding
   const obstacles = [

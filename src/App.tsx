@@ -34,7 +34,7 @@ export default function App() {
         }}
         shadows
       >
-        <Perf position="top-left" />
+        {/* <Perf position="top-left" /> */}
         <Experience />
       </Canvas>
 

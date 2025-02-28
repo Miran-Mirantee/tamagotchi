@@ -25,7 +25,7 @@ export default function Needs() {
       <div className="need">
         <span>{label} </span>
         <progress value={value} max={maxValue} />
-        <span>
+        <span className="number">
           {Math.round(value)} / {maxValue}
         </span>
       </div>

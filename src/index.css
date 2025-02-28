@@ -37,12 +37,16 @@ body,
   position: absolute;
   bottom: 16px;
   right: 16px;
-  /* pointer-events: all; */
   display: flex;
   gap: 8px;
   flex-direction: column;
   background-color: white;
-  padding: 4px 8px;
+  padding: 16px 24px;
+  border-radius: 16px;
+}
+
+.need > .number {
+  width: 64px;
 }
 
 .need {
@@ -116,6 +120,7 @@ body,
   user-select: none;
   pointer-events: all;
   cursor: pointer;
+  transform: translate(-50%, 0);
 }
 
 .model-menu-btn {

@@ -30,19 +30,19 @@ export default function Experience() {
     }
   }, [dirLightRef, dirLight2Ref]);
 
-  const c = useControls({
-    coord: { value: { x: 0, y: 0, z: 0 }, min: -10, max: 10 },
-    ambientColor: { value: "#d58b8b" },
-    ambientIntensity: { value: 3.75, min: 0, max: 30, step: 0.25 },
-    dirColor: { value: "#fcffba" },
-    dirIntensity: { value: 3.75, min: 0, max: 30, step: 0.25 },
-    dir2Color: { value: "#c2ffe8" },
-    dir2Intensity: { value: 1.75, min: 0, max: 30, step: 0.25 },
-    pointColor: { value: "#fce47b" },
-    pointIntensity: { value: 30.0, min: 0, max: 100, step: 0.25 },
-    bgColor: { value: "#d58b8b" },
-    shadowBias: { value: -0.0025, min: -0.01, max: 0.01, step: 0.00001 },
-  });
+  // const c = useControls({
+  //   coord: { value: { x: 0, y: 0, z: 0 }, min: -10, max: 10 },
+  //   ambientColor: { value: "#d58b8b" },
+  //   ambientIntensity: { value: 3.75, min: 0, max: 30, step: 0.25 },
+  //   dirColor: { value: "#fcffba" },
+  //   dirIntensity: { value: 3.75, min: 0, max: 30, step: 0.25 },
+  //   dir2Color: { value: "#c2ffe8" },
+  //   dir2Intensity: { value: 1.75, min: 0, max: 30, step: 0.25 },
+  //   pointColor: { value: "#fce47b" },
+  //   pointIntensity: { value: 30.0, min: 0, max: 100, step: 0.25 },
+  //   bgColor: { value: "#d58b8b" },
+  //   shadowBias: { value: -0.0025, min: -0.01, max: 0.01, step: 0.00001 },
+  // });
 
   // useShadowHelper(dirLightRef);
   // useShadowHelper(dirLight2Ref);
@@ -56,22 +56,22 @@ export default function Experience() {
       <color args={["rgba(255,247,176,1)"]} attach={"background"} />
 
       <Tamagotchi>
-        <color args={[c.bgColor]} attach={"background"} />
-        <ambientLight intensity={c.ambientIntensity} color={c.ambientColor} />
+        <color args={["#d58b8b"]} attach={"background"} />
+        <ambientLight intensity={3.75} color={"#d58b8b"} />
         <group
           position={[positionOffset.x, positionOffset.y, positionOffset.z]}
         >
           <pointLight
             ref={pointLightRef}
-            intensity={c.pointIntensity}
-            color={c.pointColor}
+            intensity={30.0}
+            color={"#fce47b"}
             position={[-2.5, 5, -2.5]}
             castShadow
           />
           <directionalLight
             ref={dirLightRef}
-            intensity={c.dirIntensity}
-            color={c.dirColor}
+            intensity={3.75}
+            color={"#fcffba"}
             position={[6.0, 7.4, 6.2]}
             castShadow
             shadow-camera-left={-8}
@@ -84,8 +84,8 @@ export default function Experience() {
           />
           <directionalLight
             ref={dirLight2Ref}
-            intensity={c.dir2Intensity}
-            color={c.dir2Color}
+            intensity={1.75}
+            color={"#c2ffe8"}
             position={[10.0, 3.0, 0]}
             castShadow
             shadow-camera-left={-7}
