@@ -35,7 +35,6 @@ export default function UI() {
   const setBaseModelPath = useTamagotchiStore(
     (state) => state.setBaseModelPath
   );
-  const reset = useTamagotchiStore((state) => state.reset);
   const exitFocusMode = useCameraStore((state) => state.exitFocusMode);
   const uiContainerRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);

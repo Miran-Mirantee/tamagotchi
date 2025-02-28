@@ -1,21 +1,18 @@
 import * as THREE from "three";
 import { useRef, useEffect } from "react";
-import { CameraControls, Environment, useHelper } from "@react-three/drei";
+import { CameraControls, Environment } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import PetInteractions from "./components/PetInteractions";
 import Room from "./components/Room";
 import Tamagotchi from "./components/Tamagotchi";
-import { useControls } from "leva";
 import useCameraStore from "./stores/useCameraStore";
-// import useShadowHelper from "./Utils/UseShadowHelper";
 
 export default function Experience() {
   const petRef = useRef<THREE.Group | null>(null);
   const dirLightRef = useRef<THREE.DirectionalLight | null>(null);
   const dirLight2Ref = useRef<THREE.DirectionalLight | null>(null);
   const pointLightRef = useRef<THREE.PointLight | null>(null);
-  const { controls, scene }: { controls: CameraControls; scene: THREE.Scene } =
-    useThree();
+  const { scene }: { scene: THREE.Scene } = useThree();
   const positionOffset = useCameraStore((state) => state.positionOffset);
 
   useEffect(() => {

@@ -1,5 +1,4 @@
 import { Canvas } from "@react-three/fiber";
-import { Perf } from "r3f-perf";
 import Experience from "./Experience";
 import UI from "./components/UI";
 
@@ -34,7 +33,6 @@ export default function App() {
         }}
         shadows
       >
-        {/* <Perf position="top-left" /> */}
         <Experience />
       </Canvas>
 

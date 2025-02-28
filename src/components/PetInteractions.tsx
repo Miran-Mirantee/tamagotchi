@@ -2,7 +2,6 @@ import { Suspense, useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import useTamagotchiStore, { PetAction } from "../stores/useTamagotchiStore";
-import { useControls } from "leva";
 import Pet, { ActionName } from "./Pet";
 
 const WANDER_RANGE = 5; // Define how far the random points can be.
