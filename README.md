@@ -9,3 +9,4 @@ My first challenge participation. I had to cut a lot of originally planned scope
 - **Monster Models**: [Ultimate Monsters Bundle](https://poly.pizza/bundle/Ultimate-Monsters-Bundle-5oyGWAmOB6) by Quaternius  
 
 Sadly, I couldn't implement the death mechanic in time.
+Note: Double-click the screen to enter the room
