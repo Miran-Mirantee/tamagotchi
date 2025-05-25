@@ -117,7 +117,7 @@ export default function UI() {
   return (
     <div className="ui-container" ref={uiContainerRef}>
       {!isBrowsingFood && (
-        <button className="back-btn" ref={backBtnRef} onClick={back}>
+        <button className="back-btn btn" ref={backBtnRef} onClick={back}>
           Go back
         </button>
       )}
@@ -141,7 +141,7 @@ export default function UI() {
             ))}
           </div>
           <button
-            className="food-back-btn"
+            className="food-back-btn btn"
             onClick={onStopFeedingClick}
             disabled={currentAction == PetAction.Eat}
           >
@@ -151,14 +151,14 @@ export default function UI() {
       )}
 
       {currentAction == PetAction.Sleep && (
-        <button className="wake-up-btn" onClick={onWakeUpClick}>
+        <button className="wake-up-btn btn" onClick={onWakeUpClick}>
           Wake up
         </button>
       )}
 
       <button
         ref={modelMenuBtnRef}
-        className="model-menu-btn"
+        className="model-menu-btn btn"
         onClick={openModalClick}
         disabled={isFreeze}
       >

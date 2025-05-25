@@ -9,17 +9,35 @@ body,
   background: ivory;
 }
 
+.btn {
+  font-size: 1.25rem;
+  padding: 6px 12px;
+  color: white;
+  background-color: rgb(26, 18, 75);
+  border: none;
+  border-radius: 8px;
+  user-select: none;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgb(72, 34, 116);
+}
+
+.btn:active {
+  background-color: rgb(125, 50, 148);
+}
+
+.btn:disabled {
+  background-color: rgb(119, 115, 160);
+  cursor: not-allowed;
+}
+
 .back-btn {
   position: absolute;
   bottom: 16px;
   left: 16px;
-  font-size: 18px;
-  user-select: none;
-  pointer-events: all;
-}
-
-.back-btn:hover {
-  cursor: pointer;
 }
 
 .ui-container {
@@ -40,19 +58,51 @@ body,
   display: flex;
   gap: 8px;
   flex-direction: column;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 16px 24px;
   border-radius: 16px;
+  border: 4px dashed white;
 }
 
 .need > .number {
-  width: 64px;
+  width: 5rem;
 }
 
 .need {
   display: flex;
   justify-content: flex-end;
+  color: white;
+  font-size: 1.25rem;
   gap: 8px;
+}
+
+progress[value] {
+  --w: 200px;
+  --color: linear-gradient(#fff8, #fff0),
+    repeating-linear-gradient(135deg, #0003 0 10px, #0000 0 20px),
+    rgb(76, 49, 250);
+  --background: rgb(8, 4, 32); /* the background color */
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: var(--w);
+  margin: 0 10px;
+  border-radius: 10em;
+  background: var(--background);
+}
+progress[value]::-webkit-progress-bar {
+  border-radius: 10em;
+  background: var(--background);
+}
+progress[value]::-webkit-progress-value {
+  border-radius: 10em;
+  background: var(--color);
+}
+progress[value]::-moz-progress-bar {
+  border-radius: 10em;
+  background: var(--color);
 }
 
 .debug {
@@ -72,24 +122,27 @@ body,
   bottom: 16px;
   width: 960px;
   left: calc(50% - 480px);
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   gap: 24px;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 16px;
   pointer-events: all;
+  border: 4px dashed white;
+  border-radius: 16px;
 }
 
 .food-item {
-  border: 1px solid white;
   border-radius: 16px;
+  border: none;
   height: 100px;
   width: 100px;
   color: white;
   flex-shrink: 0;
   padding: 0;
   background-color: rgb(26, 18, 75);
+  box-shadow: 4px 4px rgb(8, 4, 32);
 }
 
 .food-item:hover {
@@ -106,20 +159,12 @@ body,
   position: absolute;
   bottom: 16px;
   left: 16px;
-  font-size: 18px;
-  user-select: none;
-  pointer-events: all;
-  cursor: pointer;
 }
 
 .wake-up-btn {
   position: absolute;
   bottom: 16px;
   left: 50%;
-  font-size: 18px;
-  user-select: none;
-  pointer-events: all;
-  cursor: pointer;
   transform: translate(-50%, 0);
 }
 
@@ -127,10 +172,6 @@ body,
   position: absolute;
   top: 16px;
   right: 16px;
-  font-size: 18px;
-  user-select: none;
-  pointer-events: all;
-  cursor: pointer;
 }
 
 .overlay {
@@ -151,7 +192,8 @@ body,
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 32px;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 4px dashed white;
   height: 720px;
   width: 720px;
   padding: 32px;
@@ -162,8 +204,9 @@ body,
 .model-change-item {
   background-color: rgb(26, 18, 75);
   cursor: pointer;
-  border-radius: 8px;
-  border: 1px solid black;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 4px 4px rgb(8, 4, 32);
 }
 
 .model-change-item:hover {

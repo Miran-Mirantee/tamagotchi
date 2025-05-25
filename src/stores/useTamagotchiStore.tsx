@@ -18,6 +18,7 @@ export enum PetAction {
   WakeUp = "WakeUp",
   Bath = "Bath",
   Toilet = "Toilet",
+  Dead = "Dead",
 }
 
 type TamagotchiState = {
@@ -61,6 +62,13 @@ type TamagotchiState = {
   decreaseEnergy: (decrease: number) => void;
   decreaseBladder: (decrease: number) => void;
   decreaseHygiene: (decrease: number) => void;
+  setHunger: (hunger: TamagotchiState["hunger"]) => void;
+  setEnergy: (energy: TamagotchiState["energy"]) => void;
+  setHappiness: (happiness: TamagotchiState["happiness"]) => void;
+  setBladder: (bladder: TamagotchiState["bladder"]) => void;
+  setHygiene: (hygiene: TamagotchiState["hygiene"]) => void;
+  isAlive: boolean;
+  setIsAlive: (isAlive: TamagotchiState["isAlive"]) => void;
 };
 
 const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
@@ -151,6 +159,13 @@ const useTamagotchiStore = create<TamagotchiState>((set, get) => ({
     set((state) => ({
       hygiene: Math.max(state.hygiene - decrease, 0),
     })),
+  setHunger: (hunger) => set(() => ({ hunger })),
+  setEnergy: (energy) => set(() => ({ energy })),
+  setHappiness: (happiness) => set(() => ({ happiness })),
+  setBladder: (bladder) => set(() => ({ bladder })),
+  setHygiene: (hygiene) => set(() => ({ hygiene })),
+  isAlive: true,
+  setIsAlive: (isAlive) => set(() => ({ isAlive })),
 }));
 
 export default useTamagotchiStore;
