@@ -10,6 +10,7 @@ body,
 }
 
 .btn {
+  font-family: "DynaPuff", system-ui;
   font-size: 1.25rem;
   padding: 6px 12px;
   color: white;
@@ -69,6 +70,7 @@ body,
 }
 
 .need {
+  font-family: "DynaPuff", system-ui;
   display: flex;
   justify-content: flex-end;
   color: white;
